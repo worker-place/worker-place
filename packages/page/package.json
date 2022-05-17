@@ -1,0 +1,26 @@
+{
+  "name": "page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worker-place/worker-place.git"
+  },
+  "author": "",
+  "private": true,
+  "contributors": [
+    "DaniFoldi",
+    "HgeX",
+    "NeoAren"
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/worker-place/worker-place/issues"
+  },
+  "homepage": "https://github.com/worker-place/worker-place#readme",
+  "devDependencies": {
+    "nuxt": "npm:nuxt3@^3.0.0-rc.3-27545866.cd37a21"
+  }
+}
