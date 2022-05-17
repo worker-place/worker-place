@@ -1,0 +1,23 @@
+# Git attributes configuration for end-of-line normalization
+
+# Set default behavior to normalizing end-of-line in all files
+*               text=auto eol=lf
+
+# Source code files
+*.ts            text eol=lf
+*.js            text eol=lf
+*.json          text eol=lf
+
+# Configuration files
+.env            text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.lock          text eol=lf
+*.*rc           text eol=lf
+*.*ignore       text eol=lf
+.gitattributes  text eol=lf
+.editorconfig   text eol=lf
+
+# Documentation, misc.
+*.md            text eol=lf
+LICENSE         text eol=lf
