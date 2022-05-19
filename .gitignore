@@ -1,5 +1,20 @@
+# Git ignore configuration
+
+# dependencies
 node_modules/
 
-# editor
+# typescript cache
+*.tsbuildinfo
+
+# environment variables
+.env
+
+# editor stuff
 .idea
 .vscode
+
+# macos stuff
+.DS_Store
+
+# production build
+dist
