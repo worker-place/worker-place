@@ -3,7 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "lint": "npm-run-all lint:*",
+    "lint:css": "stylelint --cache --cache-location .stylelintcache --report-descriptionless-disables --report-needless-disables --report-invalid-scope-disables \"**/*.{scss,vue}\" \"*.{scss,vue}\"",
+    "lintw:css": "chokidar \"**/*.{scss,vue}\" -i \"{coverage,node_modules,.nuxt,.output}/**\" -c \"npm run lint:css -- --fix\"",
+    "lint:js": "eslint --ext .cjs,.js,.json,.mjs,.ts,.vue --cache --cache-file .eslintcache --report-unused-disable-directives .",
+    "lintw:js": "chokidar \"**/*.{cjs,js,json,ts,vue}\" -i \"{coverage,node_modules,.nuxt,.output}/**\" -c \"npm run lint:js -- --fix\"",
+    "lintw": "npm-run-all --parallel lintw:*",
+    "prepare": "nuxi prepare",
+    "start": "node .output/server/index.mjs",
+    "typecheck": "nuxi typecheck"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/worker-place/worker-place.git"
@@ -21,6 +33,35 @@
   },
   "homepage": "https://github.com/worker-place/worker-place#readme",
   "devDependencies": {
-    "nuxt": "npm:nuxt3@^3.0.0-rc.3-27545866.cd37a21"
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.2.2",
+    "@danifoldi/stylelint-presets": "^1.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "chokidar-cli": "^3.0.0",
+    "eslint": "^8.15.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-nuxt": "^3.2.0",
+    "eslint-plugin-unicorn": "^42.0.0",
+    "eslint-plugin-vitest": "^0.0.8",
+    "eslint-plugin-vue": "^9.0.1",
+    "npm-run-all": "^4.1.5",
+    "nuxt": "npm:nuxt3@^3.0.0-rc.3-27545866.cd37a21",
+    "paintbrush-ui": "^0.1.15",
+    "postcss": "^8.4.14",
+    "postcss-html": "^1.4.1",
+    "postcss-scss": "^4.0.4",
+    "sass": "^1.51.0",
+    "stylelint": "^14.8.2",
+    "stylelint-config-recommended": "^7.0.0",
+    "stylelint-config-recommended-scss": "^6.0.0",
+    "stylelint-high-performance-animation": "^1.6.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.2.0",
+    "typescript": "^4.6.4",
+    "vue-tsc": "^0.34.15"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.1.9",
+    "pinia": "^2.0.14"
   }
 }
