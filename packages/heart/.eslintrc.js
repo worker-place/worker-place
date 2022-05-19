@@ -1,3 +1,3 @@
 module.exports = {
-  extends: [ 'plugin:@danifoldi/eslint-presets/comet' ]
+  extends: ['plugin:@danifoldi/eslint-presets/comet']
 }

@@ -2,7 +2,7 @@ name = 'worker-place-heart'
 type = 'javascript'
 workers_dev = false
 account_id = 'd0238d3a1eebca7fc036cb766a5e538f'
-routes = [ 'worker.place/api/*' ]
+routes = ['worker.place/api/*']
 compatibility_date = '2022-05-19'
 
 kv_namespaces = [
@@ -21,4 +21,4 @@ format = 'modules'
 main = 'index.mjs'
 
 [miniflare]
-build_watch_dirs = [ 'src' ]
+build_watch_dirs = ['src']
