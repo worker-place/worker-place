@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/worker-place/worker-place#readme",
   "dependencies": {
-    "@neoaren/comet": "^0.1.9",
-    "pngjs": "^6.0.0"
+    "@neoaren/comet": "^0.1.9"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.10.0",
