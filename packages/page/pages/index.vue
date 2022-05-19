@@ -2,39 +2,40 @@
   <SidebarContainer :wrap-content="false">
     <template #sidebar-top>
       <Container center>
-        <Image alt="Paintbrush UI Logo" max-width="50%" source="/paintbrush.svg" />
+        <Image alt="Paintbrush UI Logo" max-width="50%" source="/icon.svg" />
       </Container>
     </template>
-    <template #sidebar-middle>
-      <SidebarLink href="/" icon="rocket-launch">
-        Welcome
-      </SidebarLink>
-      <SidebarLink href="/getting-started" icon="code" icon-color="green">
-        Basic Use
-      </SidebarLink>
-      <SidebarLink href="/docs" icon="flask" icon-color="orange">
-        Docs
-      </SidebarLink>
-      <SidebarLink
-        href="https://github.com/DaniFoldi/Paintbrush"
-        icon="github-logo"
-        icon-color="purple"
-      >
-        Source
-      </SidebarLink>
-      <SidebarLink
-        href="/test"
-        icon="gear"
-        icon-color="lightergray"
-      >
-        Test
-      </SidebarLink>
-    </template>
+    <template #sidebar-middle />
     <template #sidebar-bottom>
-      <PoweredBy />
+      <Container center gap="">
+        <ThemeToggle />
+        <SidebarLink
+          href="https://github.com/worker-place/worker-place"
+          icon="github-logo"
+          icon-color="primary"
+        >
+          Source
+        </SidebarLink>
+        <PoweredBy />
+      </Container>
     </template>
     <template #content>
-      <NuxtPage />
+      <MenubarContainer ref="scrollAnchor" :wrap-content="false">
+        <template #menubar-middle>
+          <MenubarLink href="/about">
+            About
+          </MenubarLink>
+          <MenubarLink href="/faq">
+            FAQ
+          </MenubarLink>
+        </template>
+        <template #menubar-right>
+          <Button>Login</Button>
+        </template>
+        <template #content>
+          <NuxtChild />
+        </template>
+      </MenubarContainer>
     </template>
   </SidebarContainer>
 </template>
