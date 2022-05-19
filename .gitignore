@@ -18,3 +18,11 @@ node_modules/
 
 # production build
 dist
+
+# nuxt
+.nuxt
+.output
+
+# lint
+.eslintcache
+.stylelintcache
