@@ -35,6 +35,7 @@
   "devDependencies": {
     "@danifoldi/eslint-plugin-eslint-presets": "^1.2.2",
     "@danifoldi/stylelint-presets": "^1.0.2",
+    "@nuxt/kit": "^3.0.0-rc.3",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "chokidar-cli": "^3.0.0",
