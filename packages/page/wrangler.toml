@@ -1,0 +1,13 @@
+name = 'worker-place-page'
+type = 'javascript'
+account_id = 'ACCOUNT_ID'
+compatibility_date = '2022-05-21'
+
+[env.production]
+routes = [ 'worker.place', 'worker.place/about', 'worker.place/faq' ]
+
+[build]
+command = 'NITRO_PERSET=cloudflare npm run build'
+
+[build.upload]
+format = 'service-worker'

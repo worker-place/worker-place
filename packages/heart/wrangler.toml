@@ -1,7 +1,7 @@
 name = 'worker-place-heart'
 type = 'javascript'
 workers_dev = false
-account_id = 'd0238d3a1eebca7fc036cb766a5e538f'
+account_id = 'ACCOUNT_ID'
 routes = [ 'worker.place/api/*' ]
 compatibility_date = '2022-05-19'
 
