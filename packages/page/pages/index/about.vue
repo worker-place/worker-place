@@ -6,7 +6,7 @@
       </Text>
       <Text italic>
         worker.place was made in (update, more than) one week for
-        <AutoLink href="https://blog.cloudflare.com/announcing-our-spring-developer-challenge/">
+        <AutoLink href="https://blog.cloudflare.com/announcing-our-spring-developer-challenge/" :weight="500">
           Cloudflare 2022 Spring Developer Challenge
         </AutoLink>
       </Text>
@@ -41,9 +41,9 @@
         <Text italic part>
           squads
         </Text>
-        can all be part of a painting, like <AutoLink href="https://www.reddit.com/r/place/">
+        can all be part of a painting, like <AutoLink href="https://www.reddit.com/r/place/" :weight="500">
           r/place
-        </AutoLink>
+        </AutoLink>.
       </Text>
       <Text subtitle>
         Let's get building
@@ -53,20 +53,23 @@
       </Text>
       <Text>
         We've spent the little time we had on Tuesday discussing ideas,
-        discussing how they would work and how we could pull it off in one week. Eventually we landed on worker.place, a collaborative image composing system.
+        discussing how they would work and how we could pull it off in one week.
+        Eventually we landed on worker.place, a collaborative image composing system.
       </Text>
       <Text sectiontitle>
         18 May, Wednesday
       </Text>
       <Text>
-        Wednesday was planning day. We started with a basic diagram of possible interactions. Then we created some sketches of the UI, and decided that we would use <AutoLink href="https://paintbrush.danifoldi.com">
+        Wednesday was planning day. We started with a basic diagram of possible interactions.
+        Then we created some sketches of the UI, and decided that we would use
+        <AutoLink href="https://paintbrush.danifoldi.com" :weight="500">
           Paintbrush
-        </AutoLink> as our UI library, and <AutoLink href="https://github.com/NeoAren/comet">
+        </AutoLink> as our UI library, and <AutoLink href="https://github.com/NeoAren/comet" :weight="500">
           comet
         </AutoLink> as our routing framework.
       </Text>
       <Text>
-        As a first step, we created the <AutoLink href="https://github.com/worker-place/worker-place">
+        As a first step, we created the <AutoLink href="https://github.com/worker-place/worker-place" :weight="500">
           GitHub repository
         </AutoLink>, came up with a color scheme, logo and name.
       </Text>
