@@ -23,6 +23,7 @@
 
   useNuxtApp().vueApp.config.unwrapInjectedRef = true
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const colorScheme = {
     black: '#021d27',
     blue: '#549ab6',
@@ -32,6 +33,7 @@
     lightgray: '#e1e5f2',
     white: '#ffffff'
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const lightColors = {
     background: 'lightgray',
     background2: 'white',
@@ -44,6 +46,7 @@
     textShade: 'lightgray',
     unit: '4px'
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const darkColors = {
     background: 'black',
     background2: 'dark',
