@@ -5,7 +5,8 @@
         This is the origin story of worker.place
       </Text>
       <Text italic>
-        worker.place was made in one week for <AutoLink href="https://blog.cloudflare.com/announcing-our-spring-developer-challenge/">
+        worker.place was made in (update, more than) one week for
+        <AutoLink href="https://blog.cloudflare.com/announcing-our-spring-developer-challenge/">
           Cloudflare 2022 Spring Developer Challenge
         </AutoLink>
       </Text>
@@ -23,7 +24,7 @@
         After some discussion, the three of us started to gather ideas for the project we would be building.
       </Text>
       <Text sectiontitle>
-        What to build
+        Deciding what to build
       </Text>
       <Text>
         The theme is "real-time, collaborative applications", so first we started thinking about co-op games.
@@ -35,7 +36,8 @@
         We shifted our idea slightly from games to images.
         Following the idea of collaborative "robots"
         (now <Text italic part>
-          agents</Text>) we agreed to create a platform where
+          agents
+        </Text>) we agreed to create a platform where
         <Text italic part>
           squads
         </Text>
@@ -49,13 +51,25 @@
       <Text sectiontitle>
         17 May, Tuesday
       </Text>
-      <Text>We've spent the little time we had on Tuesday discussing ideas,
-         discussing how they would work and how we could pull it off in one week. Eventually we landed on worker.place, a collaborative image composing system.</Text>
+      <Text>
+        We've spent the little time we had on Tuesday discussing ideas,
+        discussing how they would work and how we could pull it off in one week. Eventually we landed on worker.place, a collaborative image composing system.
+      </Text>
       <Text sectiontitle>
         18 May, Wednesday
       </Text>
-      <Text>Wednesday was planning day. We started with a basic diagram of possible interactions. Then we created some sketches of the UI, and decided that we would use <AutoLink href="https://paintbrush.danifoldi.com">Paintbrush</AutoLink> as our UI library, and <AutoLink href="https://github.com/NeoAren/comet">comet</AutoLink> as our routing framework.</Text>
-      <Text>As a first step, we created the <AutoLink href="https://github.com/worker-place/worker-place">GitHub repository</AutoLink>, came up with a color scheme, logo and name.</Text>
+      <Text>
+        Wednesday was planning day. We started with a basic diagram of possible interactions. Then we created some sketches of the UI, and decided that we would use <AutoLink href="https://paintbrush.danifoldi.com">
+          Paintbrush
+        </AutoLink> as our UI library, and <AutoLink href="https://github.com/NeoAren/comet">
+          comet
+        </AutoLink> as our routing framework.
+      </Text>
+      <Text>
+        As a first step, we created the <AutoLink href="https://github.com/worker-place/worker-place">
+          GitHub repository
+        </AutoLink>, came up with a color scheme, logo and name.
+      </Text>
       <Text>Then, we started building a basic PoC, </Text>
       <Text sectiontitle>
         19 May, Thursday

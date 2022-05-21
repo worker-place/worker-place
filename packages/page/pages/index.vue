@@ -20,13 +20,16 @@
       </Container>
     </template>
     <template #content>
-      <MenubarContainer ref="scrollAnchor" :wrap-content="false">
+      <MenubarContainer ref="scrollAnchor" menu-element-spacing="8px" :wrap-content="false">
         <template #menubar-middle>
+          <MenubarLink href="/">
+            worker.place
+          </MenubarLink>
           <MenubarLink href="/about">
-            About
+            about
           </MenubarLink>
           <MenubarLink href="/faq">
-            FAQ
+            faq
           </MenubarLink>
         </template>
         <template #menubar-right>
