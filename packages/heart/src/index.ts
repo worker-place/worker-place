@@ -11,3 +11,5 @@ useComet({
 export default {
   fetch: comet({ name: 'main' })
 }
+
+export { Place } from '../place/Place'

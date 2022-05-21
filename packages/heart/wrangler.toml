@@ -12,6 +12,11 @@ kv_namespaces = [
     { binding = 'SNAPSHOTS', id = '0c5060bc540f4eb1aa24ee55d2644e2a' }
 ]
 
+[durable_objects]
+bindings = [
+  { name = 'PLACE', class_name = 'Place' }
+]
+
 [build]
 command = 'npm run build'
 
@@ -21,4 +26,8 @@ format = 'modules'
 main = 'index.mjs'
 
 [miniflare]
-build_watch_dirs = [ 'src' ]
+build_watch_dirs = [ 'place', 'src' ]
+
+[[migrations]]
+tag = '2022-05-21'
+new_classes = [ 'Place' ]
