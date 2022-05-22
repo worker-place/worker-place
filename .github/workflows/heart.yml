@@ -1,0 +1,192 @@
+name: Main
+
+defaults:
+  run:
+    working-directory: packages/heart
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+    - main
+    path:
+    - packages/heart/**
+
+  pull_request:
+    branches:
+    - main
+    types:
+    - opened
+    - synchronize
+
+jobs:
+  build:
+    name: Check build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+
+    - name: Install dependencies
+      run: |
+        npm ci --no-progress
+
+    - name: Run task
+      run: |
+        npm run build
+
+  audit:
+    name: Check audit
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Run task
+      run: |
+        npm audit
+
+  eslint:
+    name: Check eslint
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+
+    - name: Install dependencies
+      run: |
+        npm ci --no-progress
+
+    - name: Build app
+      run: |
+        npm run build
+
+    - name: Run task
+      run: |
+        npm run lint
+
+  typecheck:
+    name: Run typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+
+    - name: Install dependencies
+      run: |
+        npm ci --no-progress
+
+    - name: Run task
+      run: |
+        npm run typecheck
+
+  dependabot-pr:
+    name: Approve and merge Dependabot PRs
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    needs:
+    - build
+    - audit
+    - licenses
+    - eslint
+    - typecheck
+    - test
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install gh cli
+      run: |
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+        sudo apt update
+        sudo apt install gh
+        gh --version
+
+    - name: Fetch dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Approve PR
+      if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh pr checkout "${{ github.event.pull_request.html_url }}"
+        if [ "$(gh pr status --json reviewDecision -q .currentBranch.reviewDecision)" != "APPROVED" ];
+        then gh pr review --approve "${{ github.event.pull_request.html_url }}"
+        else echo "PR already approved.";
+        fi
+
+    - name: Merge PR
+      if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh pr merge --auto --merge "${{ github.event.pull_request.html_url }}"
+
+  deploy:
+    if: github.actor != 'dependabot[bot]'
+    name: Update deployment
+    runs-on: ubuntu-latest
+
+    needs:
+    - build
+    - audit
+    - licenses
+    - eslint
+    - typecheck
+    - test
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install nodejs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+
+    - name: Install dependencies
+      run: |
+        npm ci --no-progress
+
+    - name: Publish to Cloudflare Workers
+      uses: cloudflare/wrangler-action@2.0.0
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
