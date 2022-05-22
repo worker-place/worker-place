@@ -11,13 +11,6 @@ on: # yamllint disable-line rule:truthy
     path:
     - packages/heart/**
 
-  pull_request:
-    branches:
-    - main
-    types:
-    - opened
-    - synchronize
-
 jobs:
   build:
     name: Check build
@@ -118,10 +111,8 @@ jobs:
     needs:
     - build
     - audit
-    - licenses
     - eslint
     - typecheck
-    - test
 
     steps:
     - name: Checkout repository
@@ -167,10 +158,8 @@ jobs:
     needs:
     - build
     - audit
-    - licenses
     - eslint
     - typecheck
-    - test
 
     steps:
     - name: Checkout repository
