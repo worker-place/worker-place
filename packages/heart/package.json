@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.10.0",
-    "@danifoldi/eslint-plugin-eslint-presets": "^1.2.2",
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "esbuild": "^0.14.39",
