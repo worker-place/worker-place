@@ -31,7 +31,7 @@
     "pngjs": "^6.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.10.0",
+    "@cloudflare/workers-types": "^3.11.0",
     "@danifoldi/eslint-plugin-eslint-presets": "^1.2.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
