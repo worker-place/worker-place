@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/worker-place/worker-place#readme",
   "devDependencies": {
-    "@danifoldi/eslint-plugin-eslint-presets": "^1.3.0",
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.4.1",
     "@danifoldi/stylelint-presets": "^1.1.0",
     "@nuxt/kit": "^3.0.0-rc.3",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
