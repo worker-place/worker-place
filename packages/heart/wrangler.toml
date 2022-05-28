@@ -3,7 +3,8 @@ type = 'javascript'
 workers_dev = false
 account_id = 'ACCOUNT_ID'
 routes = [ 'worker.place/api/*' ]
-compatibility_date = '2022-05-19'
+compatibility_date = '2022-05-28'
+main = 'src/index.ts'
 
 kv_namespaces = [
     { binding = 'TARGET_IMAGES', id = '1a9911b4d8c34a02a8809c512ae2e1d1', preview_id = '1a9911b4d8c34a02a8809c512ae2e1d1' },
