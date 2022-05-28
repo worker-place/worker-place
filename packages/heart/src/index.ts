@@ -21,7 +21,16 @@ useComet<unknown, { image: File }>({
 })
 
 export default {
-  fetch: comet({ name: 'main' })
+  async fetch(request: Request, env: HeartEnvironment, ctx: ExecutionContext): Promise<Response> {
+    switch (new URL(request.url).pathname) {
+      case '/api/connect':
+        // eslint-disable-next-line no-case-declarations
+        const id = env.PLACE.idFromName('worker-place')
+        return env.PLACE.get(id).fetch(request)
+    }
+
+    return comet({ name: 'main' })(request, env, ctx)
+  }
 }
 
 export { Place } from '../place/Place'

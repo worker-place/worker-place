@@ -3,3 +3,7 @@ declare module 'pngjs/browser' {
     parse(data: ArrayBuffer, callback: (error: Error, data: ArrayBuffer) => void): void
   }
 }
+
+interface HeartEnvironment {
+  PLACE: DurableObjectNamespace
+}
