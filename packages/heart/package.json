@@ -31,12 +31,12 @@
     "pngjs": "^6.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.10.0",
-    "@danifoldi/eslint-plugin-eslint-presets": "^1.2.2",
+    "@cloudflare/workers-types": "^3.11.0",
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "esbuild": "^0.14.39",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.2.2",
     "miniflare": "^2.4.0",
