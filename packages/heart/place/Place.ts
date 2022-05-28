@@ -19,7 +19,7 @@ export class Place {
 
     // todo retrieve saved image parts
 
-    if (this.state.storage.getAlarm() == null) {
+    if (this.state.storage.getAlarm() === null) {
       const date = Date.now()
       this.state.storage.setAlarm(date)
       this.state.storage.put('next_alarm_date', date)
