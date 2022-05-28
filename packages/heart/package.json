@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/worker-place/worker-place#readme",
   "dependencies": {
-    "@neoaren/comet": "^0.1.9",
+    "@neoaren/comet": "^0.1.10",
     "dog": "^1.1.3",
     "pngjs": "^6.0.0"
   },
@@ -35,11 +35,11 @@
     "@danifoldi/eslint-plugin-eslint-presets": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
-    "esbuild": "^0.14.39",
+    "esbuild": "^0.14.41",
     "eslint": "^8.16.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.2.2",
-    "miniflare": "^2.4.0",
+    "eslint-plugin-jest": "^26.4.2",
+    "miniflare": "^2.5.0",
     "typescript": "^4.7.2"
   }
 }
