@@ -1,5 +1,4 @@
 import { comet, Method, useComet } from '@neoaren/comet'
-// eslint-disable-next-line import/no-unresolved
 import { PNG } from 'pngjs/browser'
 
 
