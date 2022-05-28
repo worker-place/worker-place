@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/worker-place/worker-place#readme",
   "devDependencies": {
-    "@danifoldi/eslint-plugin-eslint-presets": "^1.4.1",
+    "@danifoldi/eslint-plugin-eslint-presets": "^1.4.2",
     "@danifoldi/stylelint-presets": "^1.1.0",
     "@nuxt/kit": "^3.0.0-rc.3",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
@@ -59,7 +59,7 @@
     "stylelint-order": "^5.0.0",
     "stylelint-scss": "^4.2.0",
     "typescript": "^4.7.2",
-    "vue-tsc": "^0.34.16"
+    "vue-tsc": "^0.34.17"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.1.9",
