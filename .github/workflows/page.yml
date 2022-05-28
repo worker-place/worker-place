@@ -205,7 +205,7 @@ jobs:
         npm ci --no-progress
 
     - name: Publish to Cloudflare Workers
-      uses: cloudflare/pages-action@1s.0.0
+      uses: cloudflare/pages-action@1.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
