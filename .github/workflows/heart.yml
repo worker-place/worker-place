@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/heart/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -64,6 +65,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/heart/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -90,6 +92,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/heart/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -170,6 +173,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/heart/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -206,6 +210,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/heart/package-lock.json
 
     - name: Install dependencies
       run: |

@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -68,6 +69,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm ci --no-progress
+
     - name: Run task
       run: |
         npm run lint:css
@@ -85,6 +87,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -111,6 +114,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -193,6 +197,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -224,6 +229,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
@@ -261,6 +267,7 @@ jobs:
       with:
         node-version: 16
         cache: npm
+        cache-dependency-path: packages/page/package-lock.json
 
     - name: Install dependencies
       run: |
