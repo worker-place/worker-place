@@ -2,7 +2,7 @@
   <SidebarContainer :wrap-content="false">
     <template #sidebar-top>
       <Container center>
-        <Image alt="Paintbrush UI Logo" max-width="50%" source="/icon.svg" />
+        <Image alt="Paintbrush UI Logo" max-width="50%" source="/assets/icon.svg" />
       </Container>
     </template>
     <template #sidebar-middle />
