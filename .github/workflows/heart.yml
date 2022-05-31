@@ -179,10 +179,15 @@ jobs:
       run: |
         npm ci --no-progress
 
+    - name: Set wrangler account details
+      run: |
+        sed -i 's/ACCOUNT_ID/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/' wrangler.toml
+
     - name: Publish to Cloudflare Workers
       uses: cloudflare/wrangler-action@2.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        workingDirectory: 'packages/heart'
 
   code-analysis:
     name: Run CodeQL analysis

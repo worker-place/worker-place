@@ -208,6 +208,9 @@ jobs:
       uses: cloudflare/pages-action@1.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: worker-place
+        directory: .output/public
 
   deploy-worker:
     if: github.actor != 'dependabot[bot]'
@@ -236,11 +239,15 @@ jobs:
       run: |
         npm ci --no-progress
 
+    - name: Set wrangler account details
+      run: |
+        sed -i 's/ACCOUNT_ID/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/' wrangler.toml
+
     - name: Publish to Cloudflare Workers
       uses: cloudflare/wrangler-action@2.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        workingDirectory: ''
+        workingDirectory: 'packages/page'
 
   code-analysis:
     name: Run CodeQL analysis
