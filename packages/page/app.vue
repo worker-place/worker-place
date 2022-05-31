@@ -8,7 +8,7 @@
     favicon="/assets/icon.png"
     favicon-svg="/assets/icon.svg"
     large-image="/assets/icon.png"
-    large-image-alt="Paintbrush UI Logo"
+    large-image-alt="worker.place logo"
     :light-colors="lightColors"
     page-title="The internet worker.place"
     url="https://worker.place"
