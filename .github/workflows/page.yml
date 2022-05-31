@@ -215,12 +215,8 @@ jobs:
     - name: Publish to Cloudflare Pages
       uses: cloudflare/pages-action@1.0.0
       working-directory: packages/page/.output
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        projectName: worker-place
-        directory: public
-        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      run:
+        CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_TOKEN }} npx wrangler pages publish public --project-name=worker-place
 
   deploy-worker:
     if: github.actor != 'dependabot[bot]'
