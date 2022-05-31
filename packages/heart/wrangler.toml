@@ -1,5 +1,4 @@
 name = 'worker-place-heart'
-type = 'javascript'
 workers_dev = false
 account_id = 'ACCOUNT_ID'
 routes = [ 'worker.place/api/*' ]
@@ -18,13 +17,9 @@ bindings = [
   { name = 'PLACE', class_name = 'Place' }
 ]
 
+# TODO remove, it's not used anyways
 [build]
 command = 'npm run build'
-
-[build.upload]
-dir = 'dist'
-format = 'modules'
-main = 'index.mjs'
 
 [miniflare]
 build_watch_dirs = [ 'place', 'src' ]
