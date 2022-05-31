@@ -3,6 +3,7 @@ workers_dev = false
 account_id = 'ACCOUNT_ID'
 routes = [ 'worker.place/api/*' ]
 compatibility_date = '2022-05-28'
+compatibility_flags = [ 'durable_object_alarms', 'url_standard' ]
 main = 'src/index.ts'
 
 kv_namespaces = [
