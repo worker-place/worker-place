@@ -42,3 +42,17 @@
     </template>
   </SidebarContainer>
 </template>
+
+<script lang="ts" setup>
+  onMounted(() => {
+    const socket = new WebSocket('wss://worker.place/connect')
+
+    socket.addEventListener('open', () => {
+      console.log('connected')
+    })
+
+    socket.addEventListener('meessage', event => {
+      console.log(event)
+    })
+  })
+</script>
