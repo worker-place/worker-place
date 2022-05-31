@@ -214,11 +214,12 @@ jobs:
 
     - name: Publish to Cloudflare Pages
       uses: cloudflare/pages-action@1.0.0
+      working-directory: packages/page/.output
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: worker-place
-        directory: packages/page/.output/public
+        directory: public
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-worker:
