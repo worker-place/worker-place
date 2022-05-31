@@ -51,7 +51,7 @@
       console.log('connected')
     })
 
-    socket.addEventListener('meessage', event => {
+    socket.addEventListener('message', event => {
       console.log(event)
     })
   })
