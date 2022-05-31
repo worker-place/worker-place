@@ -218,7 +218,7 @@ jobs:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: worker-place
-        directory: .output/public
+        directory: packages/page/.output/public
         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-worker:
