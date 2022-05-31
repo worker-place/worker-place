@@ -32,7 +32,7 @@ export class Place {
 
   async alarm() {
     console.log('Place alarm fired')
-    
+
     await update(this.state, { ...this.env, ...this.mem })
 
     const alarm = await this.state.storage.get('next_alarm_date') as number ?? Date.now()
