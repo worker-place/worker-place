@@ -34,11 +34,11 @@
     "@cloudflare/workers-types": "^3.11.0",
     "@danifoldi/eslint-plugin-eslint-presets": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.26.0",
+    "@typescript-eslint/parser": "^5.27.0",
     "esbuild": "^0.14.41",
     "eslint": "^8.16.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^26.4.2",
+    "eslint-plugin-jest": "^26.4.6",
     "miniflare": "^2.5.0",
     "typescript": "^4.7.2"
   }
