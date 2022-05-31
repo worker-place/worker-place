@@ -182,6 +182,10 @@ jobs:
     name: Publish to Cloudflare Pages
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      deployments: write
+
     needs:
     - build
     - audit
@@ -204,13 +208,14 @@ jobs:
       run: |
         npm ci --no-progress
 
-    - name: Publish to Cloudflare Workers
+    - name: Publish to Cloudflare Pages
       uses: cloudflare/pages-action@1.0.0
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         projectName: worker-place
         directory: .output/public
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-worker:
     if: github.actor != 'dependabot[bot]'
