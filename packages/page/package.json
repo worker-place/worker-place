@@ -65,5 +65,8 @@
   "dependencies": {
     "@pinia/nuxt": "^0.1.9",
     "pinia": "^2.0.14"
+  },
+  "overrides": {
+    "miniflare": "^2.5.0"
   }
 }
