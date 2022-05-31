@@ -2,7 +2,7 @@ name = 'worker-place-page'
 account_id = 'ACCOUNT_ID'
 compatibility_date = '2022-05-21'
 main = '.output/server/index.mjs'
-routes = [ 'worker.place', 'worker.place/about', 'worker.place/faq', 'worker.place/_nuxt/*' ]
+routes = [ 'worker.place', 'worker.place/about', 'worker.place/faq' ]
 
 [build]
 command = 'NITRO_PRESET=cloudflare npm run build'
