@@ -36,7 +36,7 @@
     "@danifoldi/eslint-plugin-eslint-presets": "^1.4.2",
     "@danifoldi/stylelint-presets": "^1.1.0",
     "@nuxt/kit": "^3.0.0-rc.3",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.26.0",
     "chokidar-cli": "^3.0.0",
     "eslint": "^8.16.0",
