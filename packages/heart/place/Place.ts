@@ -43,7 +43,7 @@ export class Place {
 
   async fetch(request: Request): Promise<Response> {
     switch (new URL(request.url).pathname) {
-      case '/connect':
+      case '/api/connect':
         return this.connect(request)
     }
 
