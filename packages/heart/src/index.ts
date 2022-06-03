@@ -22,6 +22,8 @@ useComet<unknown, { image: File }>({
 
 export default {
   async fetch(request: Request, env: HeartEnvironment, ctx: ExecutionContext): Promise<Response> {
+    console.log(request.url)
+
     switch (new URL(request.url).pathname) {
       case '/api/connect':
         // eslint-disable-next-line no-case-declarations
