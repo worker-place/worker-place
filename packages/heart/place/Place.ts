@@ -21,7 +21,7 @@ export class Place {
 
     // todo retrieve saved image parts
 
-    this.done = this.setupAlarm()
+    // this.done = this.setupAlarm()
   }
 
   async setupAlarm() {
