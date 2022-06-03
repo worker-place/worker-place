@@ -26,6 +26,8 @@ export class Place {
 
   async setupAlarm() {
     console.log('Place setupAlarm called')
+    const s = this.state.storage
+    console.log('time', s)
     console.log('time', await this.state.storage.getAlarm())
     if (await this.state.storage.getAlarm() === null) {
       const date = Date.now() + 1000
