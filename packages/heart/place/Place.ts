@@ -77,6 +77,11 @@ export class Place {
     session[1].addEventListener('error', async event => {
       this.mem.SESSIONS?.splice(this.mem.SESSIONS?.indexOf(session[1]), 1)
     })
+    session[1].addEventListener('message', async event => {
+      if (event.data) {
+        session[1].send(this.mem.IMAGE!)
+      }
+    })
 
     return new Response(null, { status: 101, webSocket: session[0] })
   }
