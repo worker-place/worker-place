@@ -18,10 +18,6 @@ bindings = [
   { name = 'PLACE', class_name = 'Place' }
 ]
 
-# TODO remove, it's not used anyways
-[build]
-command = 'npm run build'
-
 [miniflare]
 build_watch_dirs = [ 'place', 'src' ]
 
