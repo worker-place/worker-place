@@ -9,6 +9,8 @@ export class Place {
   env: PlaceEnvironment
   mem: Partial<PlaceEnvironment>
 
+  done?: Promise<void>
+
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
     this.state = state
     this.env = env
@@ -19,7 +21,7 @@ export class Place {
 
     // todo retrieve saved image parts
 
-    this.setupAlarm()
+    this.done = this.setupAlarm()
   }
 
   async setupAlarm() {
@@ -50,6 +52,11 @@ export class Place {
   }
 
   async fetch(request: Request): Promise<Response> {
+    if (this.done) {
+      await this.done
+      this.done = undefined
+    }
+
     console.log('fetch', request.url)
     switch (new URL(request.url).pathname) {
       case '/api/connect':
