@@ -24,7 +24,7 @@ export class Place {
 
   async setupAlarm() {
     console.log('Place setupAlarm called')
-    console.log(await this.state.storage.getAlarm())
+    console.log('time', await this.state.storage.getAlarm())
     if (await this.state.storage.getAlarm() === null) {
       const date = Date.now() + 1000
       await this.state.storage.setAlarm(date)
@@ -50,7 +50,7 @@ export class Place {
   }
 
   async fetch(request: Request): Promise<Response> {
-    console.log(request.url)
+    console.log('fetch', request.url)
     switch (new URL(request.url).pathname) {
       case '/api/connect':
         return this.connect(request)
