@@ -5,5 +5,9 @@ declare module 'pngjs/browser' {
 }
 
 interface HeartEnvironment {
+  ACCESSORY: Fetcher
+  ACCESSORY_SERVICE_ID: string
+  ACCESSORY_TOKEN: string
+  
   PLACE: DurableObjectNamespace
 }

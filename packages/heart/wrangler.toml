@@ -21,6 +21,11 @@ bindings = [
 [miniflare]
 build_watch_dirs = [ 'place', 'src' ]
 
+[[services]]
+binding = 'ACCESSORY'
+service = 'accessory'
+environment = 'production'
+
 [[migrations]]
 tag = '2022-05-21'
 new_classes = [ 'Place' ]
