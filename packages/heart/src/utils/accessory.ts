@@ -4,13 +4,13 @@ interface AccessoryConfig {
 }
 
 export async function getConfig(env: HeartEnvironment): Promise<AccessoryConfig> {
-  const cached = await caches.default.match(new Request('/services/config/get'))
+  const cached = await caches.default.match(new Request('https://accessory.worker.place/services/config/get'))
   if (cached) {
     const data = await cached.json<{config: AccessoryConfig}>()
     return data.config
   }
 
-  const response = await env.ACCESSORY.fetch('/services/config/get', {
+  const response = await env.ACCESSORY.fetch('http://accessory/services/config/get', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export async function getConfig(env: HeartEnvironment): Promise<AccessoryConfig>
     })
   })
 
-  caches.default.put(new Request('/services/config/get', {
+  caches.default.put(new Request('https://accessory.worker.place/services/config/get', {
     headers: {
       'Cache-Control': 's-maxage=3600, max-age=3600'
     }
