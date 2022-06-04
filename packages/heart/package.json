@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "miniflare dist/index.mjs --live-reload --debug",
+    "dev": "miniflare src/index.ts --live-reload --debug",
     "build": "esbuild src/index.ts --bundle --format=esm --target=esnext --outdir=dist --out-extension:.js=.mjs",
     "lint": "eslint . --ext ts --report-unused-disable-directives",
     "lint:fix": "eslint . --ext ts --fix --report-unused-disable-directives",
