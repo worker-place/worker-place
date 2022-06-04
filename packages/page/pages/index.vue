@@ -7,8 +7,8 @@
     </template>
     <template #sidebar-middle />
     <template #sidebar-bottom>
-      <Container center gap="">
-        <ThemeToggle />
+      <Container center gap="4px" grid="1fr">
+        <ThemeToggle border="primary" thumb-color="background2" />
         <SidebarLink
           href="https://github.com/worker-place/worker-place"
           icon="github-logo"
