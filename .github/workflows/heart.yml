@@ -188,6 +188,12 @@ jobs:
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         workingDirectory: 'packages/heart'
+        secrets: |
+          ACCESSORY_TOKEN
+          ACCESSORY_SERVICE_ID
+      env:
+        ACCESSORY_TOKEN: ${{ secrets.ACCESSORY_TOKEN }}
+        ACCESSORY_SERVICE_ID: ${{ secrets.ACCESSORY_SERVICE_ID }}
 
   code-analysis:
     name: Run CodeQL analysis
