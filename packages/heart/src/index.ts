@@ -1,5 +1,7 @@
 import { comet, Method, useComet } from '@neoaren/comet'
 import { PNG } from 'pngjs/browser'
+import { getAccessTokenFromTemporaryCode, getUserDataFromAccessToken } from './utils/github'
+import { hashNtimes, getRandomValue } from './utils/crypto'
 
 
 useComet<unknown, { image: File }>({
@@ -20,6 +22,25 @@ useComet<unknown, { image: File }>({
   return event.reply.ok({ message: 'Hello, Comet!' })
 })
 
+useComet<HeartEnvironment, { code: string }>({
+  method: Method.POST,
+  pathname: '/api/login'
+}, async event => {
+  console.log(event.cookies.values())
+  const accessToken = await getAccessTokenFromTemporaryCode(event.body.code, event.env)
+  if (!accessToken) return event.reply.badRequest({ message: 'Invalid temporary code' })
+  const user = await getUserDataFromAccessToken(accessToken)
+  if (!user) return event.reply.internalServerError({ message: 'Invalid access token' })
+  console.log('user', user)
+  const value = getRandomValue()
+  const hash = await hashNtimes(value, 64)
+  const tokenWithValue = `wp_${user.id}_${value}`
+  const tokenWithHash = `wp_${user.id}_${hash}`
+  event.env.SESSION_TOKENS.put(tokenWithHash, '', { expirationTtl: 30 * 24 * 60 * 60 })
+  event.reply.cookies.set('worker_place_auth', tokenWithValue, { httpOnly: true, secure: true, sameSite: 'Strict' })
+  return event.reply.ok()
+})
+
 export default {
   async fetch(request: Request, env: HeartEnvironment, ctx: ExecutionContext): Promise<Response> {
     console.log(request.url)
@@ -31,7 +52,7 @@ export default {
         return env.PLACE.get(id).fetch(request)
     }
 
-    return comet({ name: 'main' })(request, env, ctx)
+    return comet({ name: 'main', cors: { origins: '*', headers: '*', methods: '*' } })(request, env, ctx)
   }
 }
 
