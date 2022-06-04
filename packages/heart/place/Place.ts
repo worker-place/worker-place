@@ -9,8 +9,6 @@ export class Place {
   env: PlaceEnvironment
   mem: Partial<PlaceEnvironment>
 
-  done?: Promise<void>
-
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
     this.state = state
     this.env = env
@@ -21,13 +19,13 @@ export class Place {
 
     // todo retrieve saved image parts
 
-    // this.done = this.setupAlarm()
+    this.state.blockConcurrencyWhile(async () => {
+      await this.setupAlarm()
+    })
   }
 
   async setupAlarm() {
     console.log('Place setupAlarm called')
-    const s = this.state.storage
-    console.log('time', s)
     console.log('time', await this.state.storage.getAlarm())
     if (await this.state.storage.getAlarm() === null) {
       const date = Date.now() + 1000
@@ -54,11 +52,6 @@ export class Place {
   }
 
   async fetch(request: Request): Promise<Response> {
-    if (this.done) {
-      await this.done
-      this.done = undefined
-    }
-
     console.log('fetch', request.url)
     switch (new URL(request.url).pathname) {
       case '/api/connect':
