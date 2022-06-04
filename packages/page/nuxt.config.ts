@@ -9,6 +9,11 @@ export default defineNuxtConfig({
   paintbrush: {
     prefixComponents: false
   },
+  runtimeConfig: {
+    public: {
+      GITHUB_OAUTH_CLIENT_ID: '54510296119a4aa281d3'
+    }
+  },
   typescript: {
     shim: false
   }
