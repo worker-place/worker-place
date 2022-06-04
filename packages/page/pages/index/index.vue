@@ -1,18 +1,18 @@
 <template>
   <Container article max>
     <Container max padded>
-      <canvas ref="fasz" height="1024" width="1024" />
+      <canvas ref="canvas" height="1024" width="1024" />
     </Container>
   </Container>
 </template>
 
 <script lang="ts" setup>
-  const fasz = ref<HTMLCanvasElement | null>()
+  const canvas = ref<HTMLCanvasElement | null>()
 
   onMounted(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    const context: CanvasRenderingContext2D = fasz.value.getContext('2d')
+    const context: CanvasRenderingContext2D = canvas.value.getContext('2d')
 
     const socket = new WebSocket('wss://worker.place/api/connect')
 
