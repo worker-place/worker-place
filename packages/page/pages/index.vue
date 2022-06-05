@@ -33,7 +33,7 @@
           </MenubarLink>
         </template>
         <template #menubar-right>
-          <IconButton icon="github-logo" @click="login">
+          <IconButton color="white" icon="github-logo" @click="login">
             Login
           </IconButton>
         </template>
