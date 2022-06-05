@@ -1,28 +1,26 @@
-import { PlaceEnvironment, SquadMeta, SquadTarget } from './types'
+import { PlaceEnvironment, Squad } from './types'
 
 
-function targetToImageIndex(index: number, target: SquadTarget): number {
-  return (target.top + Math.floor(index / target.height)) * 1024 + target.left + index % target.width
+function targetToImageIndex(index: number, squad: Squad): number {
+  const { top, left, height, width } = squad.target
+  return (top + Math.floor(index / height)) * 1024 + left + index % width
 }
 
-function draw(target: SquadTarget, meta: SquadMeta, image: Uint8Array): number {
-  let pixel = meta.nextPixel
-  for (let i = 0; i < meta.memberCount; i++) {
-    image[targetToImageIndex(pixel, target)] = target.target[pixel]
+function draw(squad: Squad, image: Uint8Array): number {
+  let pixel = squad.nextPixel
+  for (let i = 0; i < squad.memberCount; i++) {
+    image[targetToImageIndex(pixel, squad)] = squad.target.target[pixel]
     pixel = pixel % (1024 * 1024)
   }
-  return (meta.nextPixel + meta.memberCount) % (target.width * target.height)
+  return (squad.nextPixel + squad.memberCount) % (squad.target.width * squad.target.height)
 }
 
 export default async function(state: DurableObjectState, env: PlaceEnvironment) {
-  const squads = await state.storage.get('squads') as string[] ?? []
-  // todo parallelize reads with promise.all
   const writes = []
-  for (const squad of squads) {
-    const target = await state.storage.get(`squad_target_${squad}`) as SquadTarget
-    const meta = await state.storage.get(`squad_meta_${squad}`) as SquadMeta
-    const nextPixel = draw(target, meta, env.IMAGE)
-    writes.push(state.storage.put(`squad_meta_${squad}`, { ...meta, nextPixel }))
+  const squads = await state.storage.list<Squad>({ prefix: 'squad_' })
+  for (const squad of squads.values()) {
+    const nextPixel = draw(squad, env.IMAGE)
+    writes.push(state.storage.put<Squad>(`squad_${squad.id}`, { ...squad, nextPixel }))
   }
   await Promise.all(writes)
 }

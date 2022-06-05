@@ -3,16 +3,24 @@ export interface PlaceEnvironment {
   SESSIONS: WebSocket[]
 }
 
-export interface SquadTarget {
-  height: number
-  left: number
-  target: Uint8Array
-  top: number
-  width: number
+export interface User {
+  avatar?: string
+  id: string
+  squadId?: string
+  username: string
 }
 
-export interface SquadMeta {
+export interface Squad {
+  id: string
   memberCount: number
-  name: number
+  name: string
   nextPixel: number
+  owner: string
+  target: {
+    height: number
+    left: number
+    target: Uint8Array
+    top: number
+    width: number
+  }
 }
