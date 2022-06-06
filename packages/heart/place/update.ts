@@ -9,7 +9,7 @@ function targetToImageIndex(index: number, squad: Squad): number {
 function draw(squad: Squad, image: Uint8Array): number {
   let pixel = squad.nextPixel
   for (let i = 0; i < squad.memberCount; i++) {
-    if (squad.target.target[pixel] === 4 && squad.target.target[pixel + 1] === 4 && squad.target.target[pixel + 2 === 4]) {
+    if (squad.target.target[pixel] === 4 && squad.target.target[pixel + 1] === 4 && squad.target.target[pixel + 2] === 4) {
       pixel = (pixel + 3) % (1024 * 1024)
       continue
     }
