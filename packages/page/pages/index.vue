@@ -33,7 +33,7 @@
           </MenubarLink>
         </template>
         <template #menubar-right>
-          <IconButton color="white" icon="github-logo" @click="login">
+          <IconButton color="white" icon="github-logo" @click="loginWithGitHub">
             Login
           </IconButton>
         </template>
@@ -46,8 +46,24 @@
 </template>
 
 <script lang="ts" setup>
-  function login() {
+  import { Squad, User } from '../types'
+
+
+  function loginWithGitHub() {
     const clientId = useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID
     location.replace(`https://github.com/login/oauth/authorize?client_id=${clientId}`)
   }
+
+  const user = useState<User | undefined>('user')
+  const squad = useState<Squad | undefined>('squad')
+
+  onMounted(async () => {
+    const response = await fetch('/api/user/current', { method: 'GET' })
+    const body = response.headers.get('content-type') === 'application/json' ? await response.json() : {}
+    console.log('fetch user data', response.status, body)
+    if (response.status === 200) {
+      user.value = body.user
+      squad.value = body.squad
+    }
+  })
 </script>

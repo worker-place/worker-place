@@ -27,7 +27,7 @@ useComet<unknown, { image: File }>({
 
 useComet<HeartEnvironment, { code: string }>({
   method: Method.POST,
-  pathname: '/api/login'
+  pathname: '/api/user/auth'
 }, async event => {
   const accessToken = await getAccessTokenFromTemporaryCode(event.body.code, event.env)
   if (!accessToken) return event.reply.badRequest({ error: 'Invalid temporary code' })
@@ -46,7 +46,7 @@ useComet<HeartEnvironment, { code: string }>({
 
 useComet<HeartEnvironment, unknown>({
   method: Method.GET,
-  pathname: '/api/self',
+  pathname: '/api/user/current',
   before: [ authentication ]
 }, async event => {
   // @ts-expect-error Comet does not yet support custom extensions to events
