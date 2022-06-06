@@ -23,7 +23,7 @@ useComet<HeartEnvironment, { code: string }>({
   const tokenWithValue = `wp_${user.id}_${value}`
   const tokenWithHash = `wp_${user.id}_${hash}`
   await event.env.SESSION_TOKENS.put(tokenWithHash, '', { expirationTtl: 30 * 24 * 60 * 60 })
-  event.reply.cookies.set('worker_place_auth', tokenWithValue, { httpOnly: true, secure: true, sameSite: 'Strict' })
+  event.reply.cookies.set('worker_place_auth', tokenWithValue, { httpOnly: true, secure: true, sameSite: 'Strict', path: '/api' })
   return event.reply.ok({ user: result.user, squad: result.squad })
 })
 
