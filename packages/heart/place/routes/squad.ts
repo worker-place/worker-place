@@ -10,7 +10,10 @@ useComet<PlaceEnvironment, unknown>({
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const result = await event.state.storage.list<Squad>({ prefix: 'squad_' })
-  const squads = [ ...result.values() ]
+  const squads = [ ...result.values() ].map(squad => {
+    const { target, ...meta } = squad
+    return meta
+  })
   return event.reply.ok({ squads })
 })
 
@@ -34,7 +37,8 @@ useComet<PlaceEnvironment, Squad>({
   newSquad.target.target = uint8Array
   await event.state.storage.put<User>(`user_${user.id}`, user)
   await event.state.storage.put<Squad>(`squad_${newSquad.id}`, newSquad)
-  return event.reply.ok({ squad: newSquad })
+  const { target, ...meta } = newSquad
+  return event.reply.ok({ squad: meta })
 })
 
 // Delete a squad

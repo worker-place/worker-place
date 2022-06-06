@@ -15,4 +15,5 @@ interface HeartEnvironment {
   ACCESSORY_TOKEN: string
   PLACE: DurableObjectNamespace
   SESSION_TOKENS: KVNamespace
+  SQUAD_IMAGES: R2Bucket
 }

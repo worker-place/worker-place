@@ -27,6 +27,7 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
   const userId = event.userId as string
   const png = new PNG()
   const raw = await event.body.image.arrayBuffer()
+  if (raw.byteLength > 1024 * 1024) return event.reply.badRequest({ error: 'The target is too large' })
   const { data, height, width } = await new Promise<PNGData>((resolve, reject) => {
     png.parse(raw, (error, result) => error ? reject(error) : resolve(result))
   })
@@ -49,6 +50,7 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
   if (squad.target.left > 1024 - squad.target.width) return event.reply.badRequest({ error: 'The target is too far right' })
   const result = await fetchPlace<{ squad: Squad }>(event.env, '/api/squad', 'POST', squad)
   if (result.error) return event.reply.custom(result.status, { error: result.error })
+  await event.env.SQUAD_IMAGES.put(squad.id, raw)
   return event.reply.ok({ squad: result.squad })
 })
 

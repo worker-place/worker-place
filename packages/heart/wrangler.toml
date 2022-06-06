@@ -26,6 +26,11 @@ binding = 'ACCESSORY'
 service = 'accessory'
 environment = 'production'
 
+[[r2_buckets]]
+binding = 'SQUAD_IMAGES'
+bucket_name = 'worker-place-squad-images'
+preview_bucket_name = 'worker-place-squad-images'
+
 [[migrations]]
 tag = '2022-05-21'
 new_classes = [ 'Place' ]
