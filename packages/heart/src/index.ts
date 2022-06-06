@@ -33,7 +33,7 @@ useComet<HeartEnvironment, { code: string }>({
   if (!accessToken) return event.reply.badRequest({ error: 'Invalid temporary code' })
   const user = await getUserDataFromAccessToken(accessToken)
   if (!user) return event.reply.internalServerError({ error: 'Invalid access token' })
-  const result = await fetchPlace(event.env, `/api/user/${user.id}`, 'POST', user)
+  const result = await fetchPlace<{ user: User; squad: Squad }>(event.env, `/api/user/${user.id}`, 'POST', user)
   if (result.error) return event.reply.custom(result.status, { error: result.error })
   const value = getRandomValue()
   const hash = await hashNtimes(value, 64)
@@ -41,7 +41,7 @@ useComet<HeartEnvironment, { code: string }>({
   const tokenWithHash = `wp_${user.id}_${hash}`
   await event.env.SESSION_TOKENS.put(tokenWithHash, '', { expirationTtl: 30 * 24 * 60 * 60 })
   event.reply.cookies.set('worker_place_auth', tokenWithValue, { httpOnly: true, secure: true, sameSite: 'Strict' })
-  return event.reply.ok()
+  return event.reply.ok({ user: result.user, squad: result.squad })
 })
 
 useComet<HeartEnvironment, unknown>({
