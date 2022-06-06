@@ -1,8 +1,8 @@
-import { PreMiddlewareEvent } from '@neoaren/comet'
+import { Event } from '@neoaren/comet'
 import { hashNtimes } from '../utils/crypto'
 
 
-export async function authentication(event: PreMiddlewareEvent<HeartEnvironment, unknown>) {
+export async function authentication(event: Event<HeartEnvironment, unknown>) {
   const cookie = event.cookies.get('worker_place_auth')
   if (!cookie) {
     return event.reply.unauthorized({ error: 'Authorization token missing' })
