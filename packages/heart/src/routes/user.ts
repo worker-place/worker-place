@@ -8,6 +8,7 @@ import { fetchPlace } from '../utils/place'
 
 // Authenticate user
 useComet<HeartEnvironment, { code: string }>({
+  server: 'main',
   method: Method.POST,
   pathname: '/api/user/auth'
 }, async event => {
@@ -28,6 +29,7 @@ useComet<HeartEnvironment, { code: string }>({
 
 // Get current user data
 useComet<HeartEnvironment, unknown>({
+  server: 'main',
   method: Method.GET,
   pathname: '/api/user/current',
   before: [ authentication ]

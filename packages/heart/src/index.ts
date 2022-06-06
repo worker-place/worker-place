@@ -1,6 +1,7 @@
 import { comet, Method, useComet } from '@neoaren/comet'
 import { PNG } from 'pngjs/browser'
 import './routes/user'
+import './routes/squad'
 
 
 useComet<unknown, { image: File }>({
