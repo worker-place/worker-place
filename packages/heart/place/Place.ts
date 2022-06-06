@@ -25,21 +25,21 @@ export class Place {
   }
 
   async loadImage() {
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < 49; i++) {
       const piece = await this.state.storage.get<Uint8Array>(`stored_image_${i}`)
       if (!piece) {
         // deliberate overhead, max would be 128*1024
-        this.mem.IMAGE?.fill(4, i * 100000, (i + 1) * 100000)
+        this.mem.IMAGE?.fill(4, i * 65000, (i + 1) * 65000)
       } else {
-        this.mem.IMAGE?.set(piece, i * 100000)
+        this.mem.IMAGE?.set(piece, i * 65000)
       }
     }
   }
 
   async saveImage() {
     const writes = []
-    for (let i = 0; i < 32; i++) {
-      const piece = i === 31 ? this.mem.IMAGE?.subarray(i * 100000) : this.mem.IMAGE?.subarray(i * 100000, (i + 1) * 100000)
+    for (let i = 0; i < 49; i++) {
+      const piece = i === 48 ? this.mem.IMAGE?.subarray(i * 65000) : this.mem.IMAGE?.subarray(i * 65000, (i + 1) * 65000)
       writes.push(this.state.storage.put(`stored_image_${i}`, piece))
     }
     await Promise.all(writes)
