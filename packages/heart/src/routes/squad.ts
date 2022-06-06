@@ -18,3 +18,29 @@ useComet<HeartEnvironment, unknown>({
   return event.reply.ok({ squads })
 })
 
+// Create a new squad
+useComet<HeartEnvironment, unknown>({
+  server: 'main',
+  method: Method.POST,
+  pathname: '/api/squad'
+}, async event => {
+  console.log(event.headers.get('content-type'))
+  const png = new PNG()
+  const raw = await event.request.arrayBuffer()
+  // const raw = await event.body.image.arrayBuffer()
+  // console.log([...new Uint8Array(raw).slice(0, 10)])
+  // const x = new TextEncoder().encode(raw)
+  // const y = x.buffer
+  console.log(raw)
+  const data = await new Promise<Uint8Array>((resolve, reject) => {
+    // PNG.read()
+    png.parse(raw, (error, result) => {
+      if (error) return reject(error)
+      return resolve(result.data)
+    })
+  })
+  // console.log('he', JSON.stringify(data))
+  // // @ts-expect-error cause I said so
+  // console.log('data', typeof data, data.constructur.name, data)
+  return event.reply.ok({ data })
+})

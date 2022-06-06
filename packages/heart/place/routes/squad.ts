@@ -4,9 +4,9 @@ import { PlaceEnvironment, Squad, User } from '../types'
 
 // Get all squads
 useComet<PlaceEnvironment, unknown>({
+  server: 'place',
   method: Method.GET,
-  pathname: '/api/squad',
-  server: 'place'
+  pathname: '/api/squad'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const result = await event.state.storage.list<Squad>({ prefix: 'squad_' })
@@ -16,9 +16,9 @@ useComet<PlaceEnvironment, unknown>({
 
 // Create a new squad
 useComet<PlaceEnvironment, Squad>({
+  server: 'place',
   method: Method.POST,
-  pathname: '/api/squad',
-  server: 'place'
+  pathname: '/api/squad'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const squad = await event.state.storage.get<Squad>(`squad_${event.body.id}`)
@@ -33,13 +33,29 @@ useComet<PlaceEnvironment, Squad>({
   return event.reply.ok()
 })
 
-// TODO delete a squad
+// Delete a squad
+useComet<PlaceEnvironment, { userId: string }>({
+  server: 'place',
+  method: Method.DELETE,
+  pathname: '/api/squad/:squadId'
+}, async event => {
+  if (!event.state) return event.reply.internalServerError()
+  const squad = await event.state.storage.get<Squad>(`squad_${event.params.squadId}`)
+  if (!squad) return event.reply.notFound({ error: 'Squad not found' })
+  const user = await event.state.storage.get<User>(`user_${event.body.userId}`)
+  if (!user) return event.reply.notFound({ error: 'User not found' })
+  if (user.id !== squad.owner) return event.reply.forbidden({ error: 'User is not the owner of this squad' })
+  user.squadId = undefined
+  await event.state.storage.put<User>(`user_${user.id}`, user)
+  await event.state.storage.delete(`squad_${squad.id}`)
+  return event.reply.ok()
+})
 
 // Join a squad
 useComet<PlaceEnvironment, { userId: string }>({
+  server: 'place',
   method: Method.POST,
-  pathname: '/api/squad/:squadId/join',
-  server: 'place'
+  pathname: '/api/squad/:squadId/join'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const squad = await event.state.storage.get<Squad>(`squad_${event.params.squadId}`)
@@ -56,9 +72,9 @@ useComet<PlaceEnvironment, { userId: string }>({
 
 // Leave a squad
 useComet<PlaceEnvironment, { userId: string }>({
+  server: 'place',
   method: Method.POST,
-  pathname: '/api/squad/:squadId/leave',
-  server: 'place'
+  pathname: '/api/squad/:squadId/leave'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const squad = await event.state.storage.get<Squad>(`squad_${event.params.squadId}`)
@@ -75,9 +91,9 @@ useComet<PlaceEnvironment, { userId: string }>({
 
 // Transfer ownership of a squad
 useComet<PlaceEnvironment, { userId: string; to: string }>({
+  server: 'place',
   method: Method.POST,
-  pathname: '/api/squad/:squadId/transfer',
-  server: 'place'
+  pathname: '/api/squad/:squadId/transfer'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const squad = await event.state.storage.get<Squad>(`squad_${event.params.squadId}`)

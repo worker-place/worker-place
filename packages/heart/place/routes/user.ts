@@ -4,9 +4,9 @@ import { PlaceEnvironment, Squad, User } from '../types'
 
 // Create or update a user
 useComet<PlaceEnvironment, { avatar?: string; username: string }>({
+  server: 'place',
   method: Method.POST,
-  pathname: '/api/user/:userId',
-  server: 'place'
+  pathname: '/api/user/:userId'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const foundUser = await event.state.storage.get<User>(`user_${event.params.userId}`)
@@ -27,9 +27,9 @@ useComet<PlaceEnvironment, { avatar?: string; username: string }>({
 
 // Get a user and optionally their squad
 useComet<PlaceEnvironment, unknown>({
+  server: 'place',
   method: Method.GET,
-  pathname: '/api/user/:userId',
-  server: 'place'
+  pathname: '/api/user/:userId'
 }, async event => {
   if (!event.state) return event.reply.internalServerError()
   const user = await event.state.storage.get<User>(`user_${event.params.userId}`)
