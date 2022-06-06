@@ -20,7 +20,7 @@ function draw(squad: Squad, image: Uint8Array): number {
     image[targetToImageIndex(pixel, squad)] = squad.target.target[pixel]
     pixel = pixel % (1024 * 1024)
   }
-  return (squad.nextPixel + squad.memberCount) % (squad.target.width * squad.target.height)
+  return (squad.nextPixel + squad.memberCount * 3) % (squad.target.width * squad.target.height * 3)
 }
 
 export default async function(state: DurableObjectState, env: PlaceEnvironment) {
