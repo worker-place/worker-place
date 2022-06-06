@@ -6,6 +6,8 @@
           File
         </Input>
         <Input v-model="name" placeholder="Squad name" type="text" />
+        <Input v-model="top" placeholder="Offset from top" type="number" />
+        <Input v-model="left" placeholder="Offset from left" type="number" />
         <Button type="submit">
           Create
         </Button>
@@ -67,16 +69,20 @@
 
   const file = ref<File>()
   const name = ref<string>()
+  const top = ref<string>()
+  const left = ref<string>()
 
   function onFileChange(event: any) {
     file.value = event.target.files[0]
   }
 
   async function createSquad() {
-    if (!file.value || !name.value) return
+    if (!file.value || !name.value || !top.value || !left.value) return
     const formData = new FormData()
     formData.append('name', name.value)
     formData.append('image', file.value)
+    formData.append('top', top.value)
+    formData.append('left', left.value)
     const response = await fetch('/api/squad', { method: 'POST', body: formData })
     const data = response.headers.get('content-type') === 'application/json' ? await response.json() : await response.text()
     console.log(response.status, data)

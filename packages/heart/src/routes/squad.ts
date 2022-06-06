@@ -17,7 +17,7 @@ useComet<HeartEnvironment, unknown>({
 })
 
 // Create a new squad
-useComet<HeartEnvironment, { image: File; name: string; top: number; left: number }>({
+useComet<HeartEnvironment, { image: File; name: string; top: string; left: string }>({
   server: 'main',
   method: Method.POST,
   pathname: '/api/squad',
@@ -42,7 +42,13 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
     name: event.body.name,
     nextPixel: 0,
     owner: userId,
-    target: { height, left: event.body.left, target: dataWithoutAlpha, top: event.body.top, width }
+    target: {
+      height,
+      left: Number.parseInt(event.body.left),
+      target: dataWithoutAlpha,
+      top: Number.parseInt(event.body.top),
+      width
+    }
   }
   if (squad.target.width > 128) return event.reply.badRequest({ error: 'The target is too wide' })
   if (squad.target.height > 128) return event.reply.badRequest({ error: 'The target is too tall' })
