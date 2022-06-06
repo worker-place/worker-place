@@ -43,6 +43,10 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
     owner: userId,
     target: { height, left: event.body.left, target: dataWithoutAlpha, top: event.body.top, width }
   }
+  if (squad.target.width > 128) return event.reply.badRequest({ error: 'The target is too wide' })
+  if (squad.target.height > 128) return event.reply.badRequest({ error: 'The target is too tall' })
+  if (squad.target.top > 1024 - squad.target.height) return event.reply.badRequest({ error: 'The target is too far down' })
+  if (squad.target.left > 1024 - squad.target.width) return event.reply.badRequest({ error: 'The target is too far right' })
   const result = await fetchPlace<{ squad: Squad }>(event.env, '/api/squad', 'POST', squad)
   if (result.error) return event.reply.custom(result.status, { error: result.error })
   return event.reply.ok({ squad: result.squad })
