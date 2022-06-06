@@ -62,6 +62,8 @@ useComet<HeartEnvironment, { image: File; name: string; top: string; left: strin
       width
     }
   }
+  if (Number.isNaN(squad.target.top)) return event.reply.badRequest({ error: 'Invalid top offset' })
+  if (Number.isNaN(squad.target.left)) return event.reply.badRequest({ error: 'Invalid left offset' })
   if (squad.target.width > 128) return event.reply.badRequest({ error: 'The target is too wide' })
   if (squad.target.height > 128) return event.reply.badRequest({ error: 'The target is too tall' })
   if (squad.target.top > 1024 - squad.target.height) return event.reply.badRequest({ error: 'The target is too far down' })

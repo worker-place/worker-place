@@ -6,8 +6,8 @@
           File
         </Input>
         <Input v-model="name" placeholder="Squad name" type="text" />
-        <Input v-model="top" placeholder="Offset from top" type="number" />
-        <Input v-model="left" placeholder="Offset from left" type="number" />
+        <Input v-model="top" placeholder="Top offset" type="number" />
+        <Input v-model="left" placeholder="Left offset" type="number" />
         <Button type="submit">
           Create
         </Button>
