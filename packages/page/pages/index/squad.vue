@@ -24,16 +24,10 @@
 
   async function createSquad() {
     if (!file.value || !name.value) return
-    // const formData = new FormData()
-    // console.log(await file.value.arrayBuffer())
-    // formData.append('name', name.value)
-    // formData.append('image', file.value)
-    // console.log(formData)
-    const response = await fetch(`/api/squad?name=${name.value}`, {
-      method: 'POST',
-      headers: { 'content-type': 'image/png' },
-      body: file.value
-    })
+    const formData = new FormData()
+    formData.append('name', name.value)
+    formData.append('image', file.value)
+    const response = await fetch('/api/squad', { method: 'POST', body: formData })
     const data = response.headers.get('content-type') === 'application/json' ? await response.json() : await response.text()
     console.log(response.status, data)
   }
