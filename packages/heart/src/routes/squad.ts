@@ -67,4 +67,47 @@ useComet<HeartEnvironment, unknown>({
   return event.reply.ok()
 })
 
+// Join a squad
+useComet<HeartEnvironment, unknown>({
+  server: 'main',
+  method: Method.POST,
+  pathname: '/api/squad/:squadId/join',
+  before: [ authentication ]
+}, async event => {
+  // @ts-expect-error Comet does not yet support custom extensions to events
+  const userId = event.userId as string
+  const path = `/api/squad/${event.params.squadId}/join`
+  const result = await fetchPlace(event.env, path, 'POST', { userId })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok()
+})
+
+// Leave a squad
+useComet<HeartEnvironment, unknown>({
+  server: 'main',
+  method: Method.POST,
+  pathname: '/api/squad/:squadId/leave',
+  before: [ authentication ]
+}, async event => {
+  // @ts-expect-error Comet does not yet support custom extensions to events
+  const userId = event.userId as string
+  const path = `/api/squad/${event.params.squadId}/leave`
+  const result = await fetchPlace(event.env, path, 'POST', { userId })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok()
+})
+
+// Transfer ownership of a squad
+useComet<HeartEnvironment, { to: string }>({
+  server: 'main',
+  method: Method.POST,
+  pathname: '/api/squad/:squadId/transfer',
+  before: [ authentication ]
+}, async event => {
+  // @ts-expect-error Comet does not yet support custom extensions to events
+  const userId = event.userId as string
+  const path = `/api/squad/${event.params.squadId}/transfer`
+  const result = await fetchPlace(event.env, path, 'POST', { userId, to: event.body.to })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok()
 })
