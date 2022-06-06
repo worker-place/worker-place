@@ -34,7 +34,7 @@ useComet<HeartEnvironment, { code: string }>({
   const user = await getUserDataFromAccessToken(accessToken)
   if (!user) return event.reply.internalServerError({ error: 'Invalid access token' })
   const result = await fetchPlace(event.env, `/api/user/${user.id}`, 'POST', user)
-  if (result.error) return event.reply.internalServerError({ error: result.error })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
   const value = getRandomValue()
   const hash = await hashNtimes(value, 64)
   const tokenWithValue = `wp_${user.id}_${value}`
@@ -52,7 +52,7 @@ useComet<HeartEnvironment, unknown>({
   // @ts-expect-error Comet does not yet support custom extensions to events
   const userId = event.userId as string
   const result = await fetchPlace<{ user: User; squad: Squad }>(event.env, `/api/user/${userId}`, 'GET')
-  if (result.error) return event.reply.internalServerError({ error: result.error })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
   return event.reply.ok({ user: result.user, squad: result.squad })
 })
 

@@ -4,6 +4,6 @@ export async function fetchPlace<TResponse = unknown>(env: HeartEnvironment, pat
   const headers = body ? { 'content-type': 'application/json' } : undefined
   const request = new Request(`http://place${path}`, { method, body: JSON.stringify(body), headers })
   const response = await place.fetch(request)
-  const responseBody = response.headers.get('content-type') === 'application/json' ? await response.json() : {}
-  return responseBody as TResponse & { error?: string }
+  const responseBody = response.headers.get('content-type') === 'application/json' ? await response.json<object>() : {}
+  return { ...responseBody, status: response.status } as TResponse & { error?: string; status: number }
 }
