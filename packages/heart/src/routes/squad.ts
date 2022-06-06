@@ -32,10 +32,22 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
     png.parse(raw, (error, result) => error ? reject(error) : resolve(result))
   })
   const dataWithoutAlpha = new Uint8Array(width * height * 3)
-  let i = 0
-  data.forEach((value, index) => {
-    if (index % 4 !== 3) dataWithoutAlpha[i++] = value
-  })
+  let j = 0
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] === 0) {
+      dataWithoutAlpha[j++] = 4
+      dataWithoutAlpha[j++] = 4
+      dataWithoutAlpha[j++] = 4
+    } else if (data[i] === 4 && data[i + 1] === 4 && data[i + 2] === 4) {
+      dataWithoutAlpha[j++] = 3
+      dataWithoutAlpha[j++] = 3
+      dataWithoutAlpha[j++] = 3
+    } else {
+      dataWithoutAlpha[j++] = data[i]
+      dataWithoutAlpha[j++] = data[i + 1]
+      dataWithoutAlpha[j++] = data[i + 2]
+    }
+  }
   const squad: Squad = {
     id: crypto.randomUUID().replaceAll('-', ''),
     memberCount: 0,

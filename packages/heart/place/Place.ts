@@ -21,8 +21,30 @@ export class Place {
     // todo retrieve saved image parts
 
     this.state.blockConcurrencyWhile(async () => {
+      await this.loadImage()
       await this.setupAlarm()
     })
+  }
+
+  async loadImage() {
+    for (let i = 0; i < 25; i++) {
+      const piece = await this.state.storage.get<Uint8Array>(`stored_image_${i}`)
+      if (!piece) {
+        // deliberate overhead, max would be 128*1024
+        this.mem.IMAGE?.fill(4, i * 128000, (i + 1) * 128000)
+      } else {
+        this.mem.IMAGE?.set(piece, i * 128000)
+      }
+    }
+  }
+
+  async saveImage() {
+    const writes = []
+    for (let i = 0; i < 25; i++) {
+      const piece = this.mem.IMAGE?.subarray(i * 128000, (i + 1) * 128000)
+      writes.push(this.state.storage.put(`stored_image_${i}`, piece))
+    }
+    await Promise.all(writes)
   }
 
   async setupAlarm() {
@@ -38,6 +60,7 @@ export class Place {
     console.log('Place alarm fired')
 
     await update(this.state, { ...this.env, ...this.mem })
+    await this.saveImage()
 
     const alarm = await this.state.storage.get('next_alarm_date') as number ?? Date.now()
 
@@ -49,6 +72,10 @@ export class Place {
     this.mem.SESSIONS?.forEach(session => {
       session.send(this.mem.IMAGE!)
     })
+
+    // TODO save this.mem.IMAGE to KV
+
+    console.log('Place alarm done')
   }
 
   async fetch(request: Request): Promise<Response> {

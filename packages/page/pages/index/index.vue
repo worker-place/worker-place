@@ -50,10 +50,15 @@
         const uintBuffer = new Uint8Array(buffer)
         lastbuffer = new Uint8ClampedArray(4 * 1024 * 1024)
         lastbuffer.fill(255)
+        console.log(uintBuffer)
         for (let i = 0; i < 1024 * 1024; i++) {
-          lastbuffer[4 * i] = uintBuffer[3 * i]
-          lastbuffer[4 * i + 1] = uintBuffer[3 * i + 1]
-          lastbuffer[4 * i + 2] = uintBuffer[3 * i + 2]
+          if (uintBuffer[3 * i] === 4 && uintBuffer[3 * i + 1] === 4 && uintBuffer[3 * i + 2] === 4) {
+            lastbuffer[4 * i + 3] = 0
+          } else {
+            lastbuffer[4 * i] = uintBuffer[3 * i]
+            lastbuffer[4 * i + 1] = uintBuffer[3 * i + 1]
+            lastbuffer[4 * i + 2] = uintBuffer[3 * i + 2]
+          }
         }
         context.putImageData(new ImageData(lastbuffer, 1024, 1024), 0, 0, 0, 0, size, size)
       }
