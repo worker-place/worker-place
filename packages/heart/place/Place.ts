@@ -18,8 +18,6 @@ export class Place {
       SESSIONS: []
     }
 
-    // todo retrieve saved image parts
-
     this.state.blockConcurrencyWhile(async () => {
       await this.loadImage()
       await this.setupAlarm()
@@ -27,21 +25,21 @@ export class Place {
   }
 
   async loadImage() {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 27; i++) {
       const piece = await this.state.storage.get<Uint8Array>(`stored_image_${i}`)
       if (!piece) {
         // deliberate overhead, max would be 128*1024
-        this.mem.IMAGE?.fill(4, i * 128000, (i + 1) * 128000)
+        this.mem.IMAGE?.fill(4, i * 120000, (i + 1) * 120000)
       } else {
-        this.mem.IMAGE?.set(piece, i * 128000)
+        this.mem.IMAGE?.set(piece, i * 120000)
       }
     }
   }
 
   async saveImage() {
     const writes = []
-    for (let i = 0; i < 25; i++) {
-      const piece = this.mem.IMAGE?.subarray(i * 128000, (i + 1) * 128000)
+    for (let i = 0; i < 27; i++) {
+      const piece = i === 26 ? this.mem.IMAGE?.subarray(i * 120000) : this.mem.IMAGE?.subarray(i * 120000, (i + 1) * 120000)
       writes.push(this.state.storage.put(`stored_image_${i}`, piece))
     }
     await Promise.all(writes)
@@ -80,6 +78,7 @@ export class Place {
 
   async fetch(request: Request): Promise<Response> {
     console.log('fetch', request.url)
+    await this.saveImage()
     switch (new URL(request.url).pathname) {
       case '/api/connect':
         return this.connect(request)
@@ -108,6 +107,7 @@ export class Place {
     })
     session[1].addEventListener('message', async event => {
       if (event.data) {
+        console.log('data')
         session[1].send(this.mem.IMAGE!)
       }
     })
