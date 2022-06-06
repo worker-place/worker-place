@@ -52,4 +52,19 @@ useComet<HeartEnvironment, { image: File; name: string; top: number; left: numbe
   return event.reply.ok({ squad: result.squad })
 })
 
+// Delete a squad
+useComet<HeartEnvironment, unknown>({
+  server: 'main',
+  method: Method.DELETE,
+  pathname: '/api/squad/:squadId',
+  before: [ authentication ]
+}, async event => {
+  // @ts-expect-error Comet does not yet support custom extensions to events
+  const userId = event.userId as string
+  const path = `/api/squad/${event.params.squadId}`
+  const result = await fetchPlace(event.env, path, 'DELETE', { userId })
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok()
+})
+
 })
