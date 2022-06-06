@@ -34,7 +34,7 @@
         How we built worker.place
       </Text>
       <Text subtitle>
-        How worker.place uses workers (and other cool tech)
+        How worker.place uses Workers (and other cool tech)
       </Text>
       <Text subtitle>
         Meet the team
