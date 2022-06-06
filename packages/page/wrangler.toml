@@ -4,7 +4,7 @@ workers_dev = false
 compatibility_date = '2022-05-21'
 compatibility_flags = [ 'url_standard' ]
 main = '.output/server/index.mjs'
-routes = [ 'worker.place', 'worker.place/about', 'worker.place/faq' ]
+routes = [ 'worker.place', 'worker.place/about', 'worker.place/faq', 'worker.place/squad', 'worker.place/oauth' ]
 
 [build]
 command = 'NITRO_PRESET=cloudflare npm run build'
