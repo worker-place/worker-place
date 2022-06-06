@@ -25,6 +25,9 @@
           <MenubarLink href="/">
             worker.place
           </MenubarLink>
+          <MenubarLink href="/squads">
+            squads
+          </MenubarLink>
           <MenubarLink href="/about">
             about
           </MenubarLink>
