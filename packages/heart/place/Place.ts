@@ -2,6 +2,7 @@ import { comet } from '@neoaren/comet'
 import { PlaceEnvironment } from './types'
 import update from './update'
 import './routes/user'
+import './routes/squad'
 
 
 export class Place {
