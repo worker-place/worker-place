@@ -52,7 +52,7 @@
   }
 
   .spinner-contianer {
-    margin-top: 2rem;
     justify-items: center;
+    margin-top: 2rem;
   }
 </style>
