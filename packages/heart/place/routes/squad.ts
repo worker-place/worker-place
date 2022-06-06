@@ -26,11 +26,15 @@ useComet<PlaceEnvironment, Squad>({
   const user = await event.state.storage.get<User>(`user_${event.body.owner}`)
   if (!user) return event.reply.notFound({ error: 'User not found' })
   if (user.squadId) return event.reply.forbidden({ error: 'User is already in a squad' })
-  user.squadId = event.body.id
-  event.body.memberCount = 1
+  const newSquad: Squad = event.body
+  user.squadId = newSquad.id
+  newSquad.memberCount = 1
+  const uint8Array = new Uint8Array(newSquad.target.width * newSquad.target.height * 3)
+  uint8Array.set([ ...Object.values(newSquad.target.target) ])
+  newSquad.target.target = uint8Array
   await event.state.storage.put<User>(`user_${user.id}`, user)
-  await event.state.storage.put<Squad>(`squad_${event.body.id}`, event.body)
-  return event.reply.ok()
+  await event.state.storage.put<Squad>(`squad_${newSquad.id}`, newSquad)
+  return event.reply.ok({ squad: newSquad })
 })
 
 // Delete a squad

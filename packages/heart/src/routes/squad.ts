@@ -1,36 +1,51 @@
 import { Method, useComet } from '@neoaren/comet'
-import { PNG } from 'pngjs/browser'
+import { PNG, PNGData } from 'pngjs/browser'
+import { Squad } from '../../place/types'
+import { authentication } from '../middlewares/authentication'
+import { fetchPlace } from '../utils/place'
 
 
+// Get all squads
 useComet<HeartEnvironment, unknown>({
   server: 'main',
   method: Method.GET,
   pathname: '/api/squad'
 }, async event => {
-  const squads = [
-    { id: 'abc', name: 'Squad 1', memberCount: 2, owner: '123' },
-    { id: 'fgh', name: 'Squad 1', memberCount: 37, owner: '856' },
-    { id: 'nml', name: 'Squad 1', memberCount: 8, owner: '384' },
-    { id: 'dvf', name: 'Squad 1', memberCount: 11, owner: '745' },
-    { id: 'htz', name: 'Squad 1', memberCount: 24, owner: '235' },
-    { id: 'joi', name: 'Squad 1', memberCount: 19, owner: '171' }
-  ]
-  return event.reply.ok({ squads })
+  const result = await fetchPlace<{ squads: Squad[] }>(event.env, '/api/squad', 'GET')
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok({ squads: result.squads })
 })
 
 // Create a new squad
-useComet<HeartEnvironment, { image: File; name: string }>({
+useComet<HeartEnvironment, { image: File; name: string; top: number; left: number }>({
   server: 'main',
   method: Method.POST,
-  pathname: '/api/squad'
+  pathname: '/api/squad',
+  before: [ authentication ]
 }, async event => {
+  // @ts-expect-error Comet does not yet support custom extensions to events
+  const userId = event.userId as string
   const png = new PNG()
   const raw = await event.body.image.arrayBuffer()
-  const data = await new Promise<Uint8Array>((resolve, reject) => {
-    png.parse(raw, (error, result) => {
-      if (error) return reject(error)
-      return resolve(result.data)
-    })
+  const { data, height, width } = await new Promise<PNGData>((resolve, reject) => {
+    png.parse(raw, (error, result) => error ? reject(error) : resolve(result))
   })
-  return event.reply.ok({ data })
+  const dataWithoutAlpha = new Uint8Array(width * height * 3)
+  let i = 0
+  data.forEach((value, index) => {
+    if (index % 4 !== 3) dataWithoutAlpha[i++] = value
+  })
+  const squad: Squad = {
+    id: crypto.randomUUID().replaceAll('-', ''),
+    memberCount: 0,
+    name: event.body.name,
+    nextPixel: 0,
+    owner: userId,
+    target: { height, left: event.body.left, target: dataWithoutAlpha, top: event.body.top, width }
+  }
+  const result = await fetchPlace<{ squad: Squad }>(event.env, '/api/squad', 'POST', squad)
+  if (result.error) return event.reply.custom(result.status, { error: result.error })
+  return event.reply.ok({ squad: result.squad })
+})
+
 })

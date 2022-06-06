@@ -1,6 +1,11 @@
 declare module 'pngjs/browser' {
+  export interface PNGData {
+    data: Uint8Array
+    height: number
+    width: number
+  }
   export class PNG {
-    parse(data: ArrayBuffer, callback: (error: Error, data: { data: Uint8Array }) => void): void
+    parse(data: ArrayBuffer, callback: (error: Error, data: PNGData) => void): void
   }
 }
 
