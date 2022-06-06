@@ -36,14 +36,19 @@
           </MenubarLink>
         </template>
         <template #menubar-right>
-          <IconButton
-            v-if="displayLogin"
+          <MenubarLink
+            active-background="primary"
+            active-color="white"
+            background="primary"
+            click-background="primary"
+            click-color="white"
             color="white"
+            :href="loginHref"
             icon="github-logo"
-            @click="loginWithGitHub"
+            icon-color="white"
           >
-            Login
-          </IconButton>
+            login
+          </MenubarLink>
         </template>
         <template #content>
           <NuxtChild />
@@ -54,10 +59,7 @@
 </template>
 
 <script lang="ts" setup>
-  function loginWithGitHub() {
-    const clientId = useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID
-    location.replace(`https://github.com/login/oauth/authorize?client_id=${clientId}`)
-  }
+  const loginHref = `https://github.com/login/oauth/authorize?client_id=${useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID}`
 
   const user = useUser()
   const squad = useSquad()

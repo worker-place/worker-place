@@ -30,6 +30,8 @@
     green: '#1f7a8c',
     lightblue: '#bfdbf7',
     lightgray: '#e1e5f2',
+    orange: '#faa916',
+    red: '#e83151',
     white: '#ffffff'
   }
   const lightColors = {
