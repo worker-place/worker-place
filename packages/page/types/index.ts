@@ -11,11 +11,4 @@ export interface Squad {
   name: string
   nextPixel: number
   owner: string
-  target: {
-    height: number
-    left: number
-    target: Uint8Array
-    top: number
-    width: number
-  }
 }
