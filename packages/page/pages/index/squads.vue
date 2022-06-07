@@ -64,6 +64,9 @@
                 <Button v-if="mayDeleteSquad(squad)" @click="deleteSquad(squad)">
                   Delete
                 </Button>
+                <Button v-if="mayTransferSquad(squad)" @click="transferSquadInit(squad)">
+                  Delete
+                </Button>
               </Container>
             </Container>
           </Container>
@@ -121,6 +124,30 @@
           </Button>
         </Container>
       </Popup>
+      <Popup v-if="showTransferPopup">
+        <Container center class="popup">
+          <Form @submit="transferSquad">
+            <Text sectiontitle>
+              Transfer this squad to another member
+            </Text>
+            <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+            <Input v-model="newOwner" placeholder="The ID of the new owner" required type="number" />
+            <Button type="submit">
+              Create
+            </Button>
+          </Form>
+        </Container>
+      </Popup>
+      <Popup v-if="showTransferError">
+        <Container center class="popup">
+          <Text>
+            Transferring squad failed, please try again later
+          </Text>
+          <Button color="red" @click="showTransferError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
     </ClientOnly>
   </Container>
 </template>
@@ -135,6 +162,7 @@
   const showDeleteError = ref<boolean>()
   const showCreateError = ref<boolean>()
   const showFindError = ref<boolean>()
+  const showTransferError = ref<boolean>()
 
   const currentUser = useUser()
   const currentSquad = useSquad()
@@ -231,6 +259,38 @@
     squads.value = squads.value.filter(x => x.id !== squad.id)
   }
 
+  // TRANSFER SQUAD
+
+  const showTransferPopup = ref<boolean>()
+  const squadToTransfer = ref<Squad>()
+  const newOwner = ref<string>()
+
+  function mayTransferSquad(squad: Squad) {
+    return currentUser.value?.squadId === squad.id && currentUser.value?.id === squad.owner
+  }
+
+  function transferSquadInit(squad: Squad) {
+    squadToTransfer.value = squad
+    showTransferPopup.value = true
+  }
+
+  async function transferSquad() {
+    if (!currentUser.value || !squadToTransfer.value || !newOwner.value) return
+    const body = JSON.stringify({ to: newOwner.value })
+    const response = await fetch(`/api/squad/${squadToTransfer.value.id}/transfer`, { method: 'POST', body })
+    if (response.status !== 200) {
+      showTransferError.value = true
+      return
+    }
+    const squad = squadToTransfer.value
+    squad.owner = newOwner.value
+    currentSquad.value = squad
+    squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
+    squadToTransfer.value = undefined
+    newOwner.value = undefined
+  }
+
+
   // CREATE SQUAD
 
   function mayCreateSquad() {
@@ -273,7 +333,7 @@
     margin: 2rem 0;
   }
 
-  .squad-create-image > input {
+  .squad-create-image input {
     padding-top: 4px;
   }
 
@@ -307,5 +367,9 @@
   .squad-image {
     max-height: 128px;
     max-width: 128px;
+  }
+
+  .popup {
+    padding: 2rem;
   }
 </style>
