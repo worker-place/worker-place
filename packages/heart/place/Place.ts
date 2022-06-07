@@ -11,6 +11,7 @@ export class Place {
   mem: Partial<PlaceEnvironment>
 
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
+    console.log('Place constructor')
     this.state = state
     this.env = env
     this.mem = {
@@ -19,6 +20,7 @@ export class Place {
     }
 
     this.state.blockConcurrencyWhile(async () => {
+      console.log('Place blockConcurrencyWhile')
       await this.loadImage()
       await this.setupAlarm()
     })
