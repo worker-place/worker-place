@@ -8,6 +8,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   console.log('keys: ')
   console.log(keys)
   if (keys.length > 0) {
+    console.log('keys.length > 0')
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
     console.log('Values:')
     console.log(values)
