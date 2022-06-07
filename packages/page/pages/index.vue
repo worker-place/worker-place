@@ -12,7 +12,7 @@
             {{ currentUser.username }}
           </Text> ({{ currentUser.id }})
         </Text>
-        <Text v-if="currentSquad">
+        <Text v-if="currentSquad" center>
           {{ currentSquad.name }}
         </Text>
         <Text v-if="currentSquad">
