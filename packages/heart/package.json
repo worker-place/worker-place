@@ -28,6 +28,7 @@
   "dependencies": {
     "@neoaren/comet": "^0.1.12",
     "dog": "^1.1.3",
+    "jpeg-js": "^0.4.4",
     "pngjs": "^6.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import { Method, useComet } from '@neoaren/comet'
-import { PNG } from 'pngjs/browser'
+import jpeg, { RawImageData } from 'jpeg-js'
 
 
 type TBody = { key: string; value: number[] }
@@ -37,21 +37,13 @@ useComet<HeartEnvironment, TBody>({
 
 async function parsePng(data: ArrayBuffer): Promise<ArrayBuffer> {
   return new Promise(resolve => {
-    const uintBuffer = new Uint8Array(data)
-    const lastbuffer = new Uint8ClampedArray(4 * 1024 * 1024)
-    lastbuffer.fill(255)
-    for (let i = 0; i < 1024 * 1024; i++) {
-      if (uintBuffer[3 * i] === 4 && uintBuffer[3 * i + 1] === 4 && uintBuffer[3 * i + 2] === 4) {
-        lastbuffer[4 * i + 3] = 0
-      } else {
-        lastbuffer[4 * i] = uintBuffer[3 * i]
-        lastbuffer[4 * i + 1] = uintBuffer[3 * i + 1]
-        lastbuffer[4 * i + 2] = uintBuffer[3 * i + 2]
-      }
+    const rawData: RawImageData<ArrayBuffer> = {
+      data: data,
+      height: 1024,
+      width: 1024
     }
 
-    const png = new PNG()
-    png.data = lastbuffer.buffer
-    resolve(png.pack().data)
+    const result = jpeg.encode(rawData, 50)
+    resolve(result.data)
   })
 }
