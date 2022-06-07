@@ -2,8 +2,11 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   // eslint-disable-next-line unicorn/no-await-expression-member
   const keys = (await env.SNAPSHOTS.list({ limit: 20 })).keys.map(key => key.name)
   const pending: Array<Promise<unknown>> = []
+  console.log('zs')
   if (keys.length > 0) {
+    console.log('z')
     for (const key of keys) {
+      console.log('y')
       const buffer = await env.SNAPSHOTS.get(key, 'arrayBuffer')
       if (!buffer) continue
       const bytes = new Uint8Array(buffer, 0)
