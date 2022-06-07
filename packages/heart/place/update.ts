@@ -7,6 +7,7 @@ function targetToImageIndex(index: number, squad: Squad): number {
 }
 
 function draw(squad: Squad, image: Uint8Array): number {
+  console.log('draw', squad.id, squad.nextPixel, squad.memberCount, squad.target.top, squad.target.left, squad.target.height, squad.target.width)
   let pixel = squad.nextPixel
   for (let i = 0; i < squad.memberCount; i++) {
     if (squad.target.target[pixel] === 4 && squad.target.target[pixel + 1] === 4 && squad.target.target[pixel + 2] === 4) {
