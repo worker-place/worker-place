@@ -43,7 +43,7 @@
         We use KV to store session tokens (don't worry, hashed) and temporarily the snapshots of worker.place.
       </Text>
       <Text>
-        We heavily rely on our 'Place' Durable Object, it's singleton manages squads with their target images, and the place itself.<br></br>
+        We heavily rely on our 'Place' Durable Object, it's singleton manages squads with their target images, and the place itself.<br>
         It contains the alarm responsible for updating the place, and then pushing the update to all connected users (and the snapshots).
       </Text>
       <Text>
