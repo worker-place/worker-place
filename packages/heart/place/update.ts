@@ -25,6 +25,7 @@ function draw(squad: Squad, image: Uint8Array): number {
 }
 
 export default async function(state: DurableObjectState, env: PlaceEnvironment) {
+  console.log('[Place DO] (update): begin')
   const writes = []
   const squads = await state.storage.list<Squad>({ prefix: 'squad_' })
   for (const squad of squads.values()) {
@@ -32,4 +33,5 @@ export default async function(state: DurableObjectState, env: PlaceEnvironment) 
     writes.push(state.storage.put<Squad>(`squad_${squad.id}`, { ...squad, nextPixel }))
   }
   await Promise.all(writes)
+  console.log('[Place DO] (update): end')
 }
