@@ -48,7 +48,7 @@
 
 <style lang="scss" scoped>
   .popup {
-    padding: 2rem;
+    padding: 8px 2rem 2rem;
   }
 
   .spinner-contianer {

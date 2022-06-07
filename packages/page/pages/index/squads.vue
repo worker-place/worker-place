@@ -382,6 +382,6 @@
 
   .popup {
     background: var(--background-2);
-    padding: 2rem;
+    padding: 8px 2rem 2rem;
   }
 </style>
