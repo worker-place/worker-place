@@ -90,6 +90,7 @@ useComet<PlaceEnvironment, { userId: string }>({
   const user = await event.state.storage.get<User>(`user_${event.body.userId}`)
   if (!user) return event.reply.notFound({ error: 'User not found' })
   if (user.squadId !== squad.id) return event.reply.forbidden({ error: 'User is not in this squad' })
+  if (user.id === squad.owner) return event.reply.forbidden({ error: 'The owner cannot leave the squad' })
   user.squadId = undefined
   squad.memberCount--
   await event.state.storage.put<User>(`user_${user.id}`, user)
