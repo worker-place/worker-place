@@ -1,7 +1,7 @@
 <template>
   <Container max>
     <Container center class="image-container" max>
-      <Image alt="The internet worker.place" :source="source" />
+      <Image alt="The internet worker.place" :rounded="false" :source="source" />
     </Container>
   </Container>
 </template>
