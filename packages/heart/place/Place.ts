@@ -92,7 +92,6 @@ export class Place {
 
   async fetch(request: Request): Promise<Response> {
     console.log('[Place DO] (fetch): url', request.url)
-    await this.saveImage()
     switch (new URL(request.url).pathname) {
       case '/api/connect':
         return this.connect(request)
