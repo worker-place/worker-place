@@ -1,6 +1,6 @@
 <template>
   <Container max>
-    <Container center max>
+    <Container center class="image-container" max>
       <Image alt="The internet worker.place" :source="source" />
     </Container>
   </Container>
@@ -67,10 +67,13 @@
 </script>
 
 <style lang="scss" scoped>
+  .image-container {
+    min-height: calc(100vh - 64px);
+  }
   img {
     aspect-ratio: 1 / 1;
     background: var(--background-3);
-    max-height: 100%;
+    max-height: calc(100vh - 64px);
     max-width: 100%;
   }
 </style>
