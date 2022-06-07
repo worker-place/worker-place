@@ -31,6 +31,9 @@
           <Button v-if="mayJoin(squad)" @click="join(squad)">
             Join
           </Button>
+          <Button v-if="mayLeave(squad)" @click="leave(squad)">
+            Leave
+          </Button>
           <Separator />
         </Container>
       </template>
@@ -70,17 +73,8 @@
 
     console.log(`Joining ${squad}`)
     if (user.value?.squadId) {
-      const resp = await fetch(`/api/squad/${squad.id}/leave`, {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.value?.id
-        })
-      })
-
-      if (resp.status !== 200) {
-        console.log('Failed to leave old squad')
-        return
-      }
+      const result = await leave(squad)
+      if (!result) return
     }
 
     const resp = await fetch(`/api/squad/${squad.id}/join`, {
@@ -96,6 +90,26 @@
       user.value!.squadId = squad.id
       squad.memberCount++
     }
+  }
+
+  function mayLeave(squad: Squad) {
+    return user.value && user.value.squadId === squad.id
+  }
+
+  async function leave(squad: Squad) {
+    const resp = await fetch(`/api/squad/${squad.id}/leave`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: user.value?.id
+      })
+    })
+
+    if (resp.status !== 200) {
+      console.log('Failed to leave squad')
+      return false
+    }
+
+    return true
   }
 
   // CREATE SQUAD
