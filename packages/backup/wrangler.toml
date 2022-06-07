@@ -20,5 +20,5 @@ preview_bucket_name = 'worker-place-snapshots'
 
 [[services]]
 binding = 'HEART'
-service = 'heart'
+service = 'worker-place-heart'
 environment = 'production'
