@@ -83,7 +83,7 @@
       }
     }
 
-    const resp = await fetch(`/api/squad/:${squad.id}/join`, {
+    const resp = await fetch(`/api/squad/${squad.id}/join`, {
       method: 'POST',
       body: JSON.stringify({
         userId: user.value?.id

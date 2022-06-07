@@ -84,9 +84,6 @@ export class Place {
     })
 
     if (this.mem.IMAGE) {
-      console.log('ALARM DEBUG')
-      console.log(this.mem.IMAGE)
-      console.log(this.mem.IMAGE.buffer)
       await this.env.SNAPSHOTS.put(crypto.randomUUID().toString(), this.mem.IMAGE)
     }
 
