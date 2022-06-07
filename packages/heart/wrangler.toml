@@ -34,11 +34,3 @@ preview_bucket_name = 'worker-place-squad-images'
 [[migrations]]
 tag = '2022-05-21'
 new_classes = [ 'Place' ]
-
-[triggers]
-crons = [ '*/1 * * * *' ]
-
-[[r2_buckets]]
-binding = 'BACKUP'
-bucket_name = 'worker-place-snapshots'
-preview_bucket_name = 'worker-place-snapshots'

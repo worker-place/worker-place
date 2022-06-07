@@ -5,9 +5,6 @@ declare module 'pngjs/browser' {
     width: number
   }
   export class PNG {
-    data: ArrayBuffer
-    end(data: ArrayBuffer): PNG
-    pack(): PNG
     parse(data: ArrayBuffer, callback: (error: Error, data: PNGData) => void): void
   }
 }
