@@ -102,7 +102,7 @@
         Routing library: <AutoLink href="https://github.com/Neoaren/comet" :weight="500">comet by NeoAren</AutoLink>
       </Text>
       <Text>
-        UI library: <AutoLink href="https://paintbrush.danifoldi.com" :weight="500">Paintbrush by DaniFoldi</AutoLink>
+        UI library: <AutoLink href="https://github.com/DaniFoldi/paintbrush" :weight="500">Paintbrush by DaniFoldi</AutoLink>
       </Text>
       <Text>
         Framework: <AutoLink href="https://v3.nuxtjs.org" :weight="500">Nuxt 3</AutoLink>
