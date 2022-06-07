@@ -70,6 +70,7 @@
   .image-container {
     min-height: calc(100vh - 64px);
   }
+
   img {
     aspect-ratio: 1 / 1;
     background: var(--background-3);
