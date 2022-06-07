@@ -5,8 +5,7 @@
         <Text sectiontitle>
           Create a new squad
         </Text>
-        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
-        <Input class="squad-create-image" required type="file" @change="onFileChange" />
+        <Input required type="file" @change="onFileChange" />
         <!-- eslint-disable-next-line vue/max-attributes-per-line -->
         <Input v-model="name" placeholder="Squad name" required type="text" />
         <!-- eslint-disable-next-line vue/max-attributes-per-line -->
@@ -343,7 +342,7 @@
     margin: 2rem 0;
   }
 
-  .squad-create-image input {
+  input[type=file] {
     padding-top: 4px;
   }
 
