@@ -49,7 +49,7 @@
                 />
               </Container>
               <Container class="squad-info-container">
-                <Text>
+                <Text class="squad-id" @click="copy">
                   ID: {{ squad.id }}
                 </Text>
                 <Text>
@@ -168,6 +168,13 @@
     squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
   }
 
+  async function copy(event: Event) {
+    const element = event.target as HTMLInputElement
+    if (element.textContent) {
+      await navigator.clipboard.writeText(element.textContent?.trim())
+    }
+  }
+
   function findSquad(id: string) {
     return squads.value.find(x => x.id === id)
   }
@@ -274,6 +281,11 @@
     background: v-bind(cardbackground);
     border-radius: 10px;
     padding: 8px 2rem 2rem;
+  }
+
+  .squad-id {
+    cursor: pointer;
+    text-overflow: ellipsis;
   }
 
   .squad-content {
