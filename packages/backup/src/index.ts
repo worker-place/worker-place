@@ -11,7 +11,11 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
       .map(each => {
         console.log(each)
         // @ts-expect-error ...
-        const result = new PNG().end(each).pack().data
+        console.log(Object.keys(each))
+        // const result = new PNG().end(each).pack().data
+        const png = new PNG()
+        // @ts-expect-error ...
+        png.data = each
         console.log('data is:')
         console.log(result)
       })
