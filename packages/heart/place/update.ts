@@ -9,19 +9,18 @@ function targetToImageIndex(index: number, squad: Squad): number {
 }
 
 function draw(squad: Squad, image: Uint8Array): number {
-  console.log('draw', squad.id, squad.nextPixel, squad.memberCount, squad.target.top, squad.target.left, squad.target.height, squad.target.width)
   let pixel = squad.nextPixel
   for (let i = 0; i < squad.memberCount; i++) {
     if (squad.target.target[pixel] === 4 && squad.target.target[pixel + 1] === 4 && squad.target.target[pixel + 2] === 4) {
-      pixel = (pixel + 3) % (1024 * 1024 * 3)
+      pixel = (pixel + 3) % (squad.target.width * squad.target.height * 3)
       continue
     }
     image[targetToImageIndex(pixel, squad)] = squad.target.target[pixel]
-    pixel = (pixel + 1) % (1024 * 1024 * 3)
+    pixel = (pixel + 1) % (squad.target.width * squad.target.height * 3)
     image[targetToImageIndex(pixel, squad)] = squad.target.target[pixel]
-    pixel = (pixel + 1) % (1024 * 1024 * 3)
+    pixel = (pixel + 1) % (squad.target.width * squad.target.height * 3)
     image[targetToImageIndex(pixel, squad)] = squad.target.target[pixel]
-    pixel = (pixel + 1) % (1024 * 1024 * 3)
+    pixel = (pixel + 1) % (squad.target.width * squad.target.height * 3)
   }
   return (squad.nextPixel + squad.memberCount * 3) % (squad.target.width * squad.target.height * 3)
 }
