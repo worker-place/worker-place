@@ -1,5 +1,5 @@
 <template>
-  <Container article max>
+  <Container article class="fix-my-background" max>
     <Container center max>
       <canvas ref="canvas" />
     </Container>
@@ -98,7 +98,7 @@
 </style>
 
 <style lang="scss">
-  main {
-    background: unset;
+  div.fix-my-background {
+    background: var(--background);
   }
 </style>
