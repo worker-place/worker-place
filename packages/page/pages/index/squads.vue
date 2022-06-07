@@ -94,6 +94,7 @@
       console.log('Failed to join squad')
     } else {
       user.value!.squadId = squad.id
+      squad.memberCount++
     }
   }
 
