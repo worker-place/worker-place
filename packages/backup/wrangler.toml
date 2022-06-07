@@ -1,7 +1,7 @@
 name = 'worker-place-backup'
 workers_dev = false
 account_id = 'd0238d3a1eebca7fc036cb766a5e538f'
-routes = [ 'worker.place/api/*' ]
+routes = []
 compatibility_date = '2022-05-28'
 compatibility_flags = [ 'durable_object_alarms', 'url_standard' ]
 main = 'src/index.ts'
