@@ -5,7 +5,17 @@
         <Image alt="Paintbrush UI Logo" max-width="50%" source="/assets/icon.svg" />
       </Container>
     </template>
-    <template #sidebar-middle />
+    <template #sidebar-middle>
+      <Container center gap="4px" grid="1fr">
+        <Container v-if="currentUser">
+          <Text>{{ currentUser.username }} ({{ currentUser.id }})</Text>
+        </Container>
+        <Container v-if="currentSquad">
+          <Text>{{ currentSquad.name }}</Text>
+          <Text>Member count: {{ currentSquad.memberCount }}</Text>
+        </Container>
+      </Container>
+    </template>
     <template #sidebar-bottom>
       <Container center gap="4px" grid="1fr">
         <ThemeToggle border="primary" thumb-color="background2" />
@@ -80,8 +90,8 @@
   import { loginUrl } from '../util/login'
 
 
-  const user = useUser()
-  const squad = useSquad()
+  const currentUser = useUser()
+  const currentSquad = useSquad()
   const displayLogin = ref<boolean>(true)
 
   onMounted(async () => {
@@ -89,14 +99,14 @@
     const body = response.headers.get('content-type') === 'application/json' ? await response.json() : {}
     console.log('fetch user data', response.status, body)
     if (response.status === 200) {
-      user.value = body.user
-      squad.value = body.squad
+      currentUser.value = body.user
+      currentSquad.value = body.squad
       displayLogin.value = false
     }
   })
 
   async function logout() {
-    const userId = user.value?.id
+    const userId = currentUser.value?.id
     if (!userId) {
       throw new Error('User ID is not defined')
     }
@@ -106,7 +116,7 @@
       console.log('Failed to logout')
     } else {
       displayLogin.value = true
-      user.value = undefined
+      currentUser.value = undefined
     }
   }
 </script>
