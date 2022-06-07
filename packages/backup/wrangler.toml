@@ -11,7 +11,7 @@ kv_namespaces = [
 ]
 
 [triggers]
-crons = [ '*/1 * * * *' ]
+crons = [ '*/5 * * * *' ]
 
 [[r2_buckets]]
 binding = 'BACKUP'
