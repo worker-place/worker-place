@@ -199,7 +199,7 @@
   async function copy(event: Event) {
     const element = event.target as HTMLInputElement
     if (element.textContent) {
-      await navigator.clipboard.writeText(element.textContent?.trim())
+      await navigator.clipboard.writeText(element.textContent?.replace('ID:', '').trim())
     }
   }
 
