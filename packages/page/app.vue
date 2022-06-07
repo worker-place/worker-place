@@ -27,8 +27,10 @@
     black: '#021d27',
     blue: '#549ab6',
     dark: '#022b3a',
+    darker: '#022736',
     green: '#1f7a8c',
     lightblue: '#bfdbf7',
+    lightestgray: '#eeeeee',
     lightgray: '#e1e5f2',
     orange: '#faa916',
     red: '#e83151',
@@ -37,6 +39,7 @@
   const lightColors = {
     background: 'lightgray',
     background2: 'white',
+    background3: 'lightestgray',
     doubleUnit: '8px',
     primary: 'green',
     radius: '4px',
@@ -49,6 +52,7 @@
   const darkColors = {
     background: 'black',
     background2: 'dark',
+    background3: 'darker',
     doubleUnit: '8px',
     primary: 'green',
     radius: '4px',
