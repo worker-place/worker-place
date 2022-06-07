@@ -57,7 +57,7 @@ export class Place {
     const alarm = await this.state.storage.getAlarm()
     console.log('[Place DO] (setupAlarm): current alarm is', alarm)
     if (alarm === null || alarm < Date.now()) {
-      const date = Date.now() + 1000
+      const date = Date.now() + 1000 * 20
       console.log('[Place DO] (setupAlarm): set alarm to', date)
       await this.state.storage.setAlarm(date)
       await this.state.storage.put('next_alarm_date', date)
