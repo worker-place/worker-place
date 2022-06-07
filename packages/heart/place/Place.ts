@@ -82,6 +82,8 @@ export class Place {
     })
 
     if (this.mem.IMAGE) {
+      console.log('HELLO THERE')
+      console.log(this.mem.IMAGE)
       await this.env.SNAPSHOTS.put(Date.now().toString(), this.mem.IMAGE)
     }
 
