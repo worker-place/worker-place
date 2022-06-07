@@ -9,6 +9,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each)))
     await Promise.all(values.filter(Boolean)
       .map(each => {
+        console.log(each)
         // @ts-expect-error ...
         const result = new PNG().end(each).pack().data
         console.log('data is:')
