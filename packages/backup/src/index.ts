@@ -16,6 +16,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     // @ts-expect-error ...
     values.forEach(each => console.log(Object.keys(each)))
     console.log('abc')
+    console.log('def')
     console.log('not doing anything...')
     /*await Promise.all(values.filter(Boolean)
       .map(each => {
