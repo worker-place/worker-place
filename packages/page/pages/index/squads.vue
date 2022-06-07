@@ -222,7 +222,7 @@
     margin: 2rem 0;
   }
 
-  .squad-create-image {
+  .squad-create-image > input {
     padding-top: 4px;
   }
 
