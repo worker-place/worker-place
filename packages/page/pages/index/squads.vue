@@ -1,6 +1,6 @@
 <template>
-  <Container max>
-    <Container v-if="mayCreateSquad()" article padded>
+  <Container article max>
+    <Container v-if="mayCreateSquad()" padded>
       <Form @submit="createSquad">
         <Text sectiontitle>
           Create a new squad
@@ -18,7 +18,19 @@
         </Button>
       </Form>
     </Container>
-    <Container article>
+    <Container v-if="mayJoinSquad()" padded>
+      <Form @submit="joinSquadById">
+        <Text sectiontitle>
+          Join a squad by its ID
+        </Text>
+        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+        <Input v-model="id" placeholder="Squad ID" required type="text" />
+        <Button type="submit">
+          Join
+        </Button>
+      </Form>
+    </Container>
+    <Container>
       <Container class="squad-container">
         <template v-for="squad in squads" :key="squad.id">
           <Container class="squad-entry">
@@ -58,46 +70,58 @@
         </template>
       </Container>
     </Container>
-    <Popup v-if="showJoinError">
-      <Container center class="popup">
-        <Text>
-          Joining squad failed, please try again later
-        </Text>
-        <Button color="red" @click="showJoinError = false">
-          Close
-        </Button>
-      </Container>
-    </Popup>
-    <Popup v-if="showLeaveError">
-      <Container center class="popup">
-        <Text>
-          Leaving squad failed, please try again later
-        </Text>
-        <Button color="red" @click="showLeaveError = false">
-          Close
-        </Button>
-      </Container>
-    </Popup>
-    <Popup v-if="showDeleteError">
-      <Container center class="popup">
-        <Text>
-          Deleting squad failed, please try again later
-        </Text>
-        <Button color="red" @click="showDeleteError = false">
-          Close
-        </Button>
-      </Container>
-    </Popup>
-    <Popup v-if="showCreateError">
-      <Container center class="popup">
-        <Text>
-          Creating squad failed, please try again later
-        </Text>
-        <Button color="red" @click="showCreateError = false">
-          Close
-        </Button>
-      </Container>
-    </Popup>
+    <ClientOnly>
+      <Popup v-if="showJoinError">
+        <Container center class="popup">
+          <Text>
+            Joining squad failed, please try again later
+          </Text>
+          <Button color="red" @click="showJoinError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
+      <Popup v-if="showLeaveError">
+        <Container center class="popup">
+          <Text>
+            Leaving squad failed, please try again later
+          </Text>
+          <Button color="red" @click="showLeaveError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
+      <Popup v-if="showDeleteError">
+        <Container center class="popup">
+          <Text>
+            Deleting squad failed, please try again later
+          </Text>
+          <Button color="red" @click="showDeleteError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
+      <Popup v-if="showCreateError">
+        <Container center class="popup">
+          <Text>
+            Creating squad failed, please try again later
+          </Text>
+          <Button color="red" @click="showCreateError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
+      <Popup v-if="showFindError">
+        <Container center class="popup">
+          <Text>
+            Could not find a squad with the specified ID
+          </Text>
+          <Button color="red" @click="showFindError = false">
+            Close
+          </Button>
+        </Container>
+      </Popup>
+    </ClientOnly>
   </Container>
 </template>
 
@@ -110,6 +134,7 @@
   const showLeaveError = ref<boolean>()
   const showDeleteError = ref<boolean>()
   const showCreateError = ref<boolean>()
+  const showFindError = ref<boolean>()
 
   const currentUser = useUser()
   const currentSquad = useSquad()
@@ -141,6 +166,25 @@
     currentUser.value.squadId = squad.id
     currentSquad.value = squad
     squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
+  }
+
+  function findSquad(id: string) {
+    return squads.value.find(x => x.id === id)
+  }
+
+  const id = ref<string>()
+
+  async function joinSquadById() {
+    if (!id.value) {
+      showFindError.value = true
+      return
+    }
+    const squad = findSquad(id.value)
+    if (!squad) {
+      showFindError.value = true
+      return
+    }
+    await joinSquad(squad)
   }
 
   // LEAVE SQUAD
