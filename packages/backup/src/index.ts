@@ -6,8 +6,8 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   // eslint-disable-next-line unicorn/no-await-expression-member
   const keys = (await env.SNAPSHOTS.list()).keys.map(key => key.name)
   if (keys.length > 0) {
-    /*const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, 'arrayBuffer')))
-    await Promise.all(values.filter(Boolean)
+    const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, 'arrayBuffer')))
+    /*await Promise.all(values.filter(Boolean)
       .map(each => {
         console.log(each)
         // @ts-expect-error ...
@@ -24,7 +24,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
         env.BACKUP.put(new Date().toISOString(), each)
         console.log('updated')
       }))*/
-    const value = env.SNAPSHOTS.get(keys[0], 'arrayBuffer')
+    const value = await env.SNAPSHOTS.get(keys[0], 'arrayBuffer')
     console.log(value)
 
     return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
