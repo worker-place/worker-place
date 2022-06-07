@@ -1,41 +1,17 @@
 <template>
   <Container max>
     <Container center max>
-      <canvas ref="canvas" />
+      <Image alt="The internet worker.place" :source="source" />
     </Container>
   </Container>
 </template>
 
 <script lang="ts" setup>
-  const canvas = ref<HTMLCanvasElement | null>()
-
   let observer: ResizeObserver | undefined
+  const source = ref('')
 
   onMounted(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    const context: CanvasRenderingContext2D = canvas.value.getContext('2d')
-
     let lastbuffer: Uint8ClampedArray | undefined
-    let size = 1024
-
-    observer = new ResizeObserver(entries => {
-      for (const entry of entries) {
-        size = Math.min(entry.contentRect.width, entry.contentRect.height)
-        if (canvas.value) {
-          canvas.value.width = size
-          canvas.value.height = size
-          if (lastbuffer) {
-            context.putImageData(new ImageData(lastbuffer, 1024, 1024), 0, 0, 0, 0, size, size)
-          }
-        }
-      }
-    })
-
-    if (canvas.value?.parentElement) {
-      observer.observe(canvas.value?.parentElement)
-    }
-
     let socket: WebSocket
     let delay = 0
 
@@ -69,7 +45,11 @@
               lastbuffer[4 * i + 2] = uintBuffer[3 * i + 2]
             }
           }
-          context.putImageData(new ImageData(lastbuffer, 1024, 1024), 0, 0, 0, 0, size, size)
+          const canvas = document.createElement('canvas')
+          canvas.width = 1024
+          canvas.height = 1024
+          canvas.getContext('2d')!.putImageData(new ImageData(lastbuffer, 1024, 1024), 0, 0)
+          source.value = canvas.toDataURL()
         }
       })
 
@@ -89,7 +69,7 @@
 </script>
 
 <style lang="scss" scoped>
-  canvas {
+  img {
     aspect-ratio: 1 / 1;
     background: var(--background-3);
     max-height: 100%;
