@@ -78,7 +78,7 @@ export class Place {
     await this.state.storage.put('next_alarm_date', alarm + 1000 * 20)
 
     this.mem.SESSIONS?.forEach(session => {
-      session.send(JSON.stringify([ ...this.mem.IMAGE!.slice(0, 10) ]))
+      session.send(this.mem.IMAGE!)
     })
 
     if (this.mem.IMAGE) {
