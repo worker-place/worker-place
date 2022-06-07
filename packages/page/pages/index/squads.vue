@@ -1,6 +1,6 @@
 <template>
-  <Container article max>
-    <Container padded>
+  <Container max>
+    <Container article padded>
       <Form @submit="createSquad">
         <Input type="file" @change="onFileChange">
           File
@@ -34,6 +34,8 @@
           <Button v-if="mayLeave(squad)" @click="leave(squad)">
             Leave
           </Button>
+          <Separator />
+          <Image :source="`https://worker.place/api/image?id=${squad.id}`" />
           <Separator />
         </Container>
       </template>
