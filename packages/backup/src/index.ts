@@ -1,29 +1,18 @@
-import { PNG } from 'pngjs/browser'
-
-
 async function doBackup(env: BackupEnvironment): Promise<unknown> {
-  console.log('backup...')
   // eslint-disable-next-line unicorn/no-await-expression-member
-  const keys = (await env.SNAPSHOTS.list({ limit: 10 })).keys.map(key => key.name)
+  const keys = (await env.SNAPSHOTS.list({ limit: 20 })).keys.map(key => key.name)
+  const pending: Array<Promise<unknown>> = []
   if (keys.length > 0) {
-    const pending = keys.map(async key => {
-      const value = await env.SNAPSHOTS.get(key, 'arrayBuffer')
-      if (!value) return
-      console.log(value)
-      console.log(Object.keys(value))
-      // const result = new PNG().end(each).pack().data
-      const png = new PNG()
-      png.data = value
-      console.log('data is:')
-      console.log(value)
-      return env.BACKUP.put(key, value)
-    })
-
-    await Promise.all(pending)
-    return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
+    for (const key of keys) {
+      const value = await env.SNAPSHOTS.get(key)
+      pending.push(env.HEART.fetch('/api/backup', {
+        method: 'POST',
+        body: JSON.stringify({ key: key, value: value })
+      }))
+    }
   }
 
-  console.log('keys.length < 0')
+  return Promise.all(pending)
 }
 
 export default {

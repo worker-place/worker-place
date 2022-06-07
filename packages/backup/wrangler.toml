@@ -17,3 +17,8 @@ crons = [ '*/1 * * * *' ]
 binding = 'BACKUP'
 bucket_name = 'worker-place-snapshots'
 preview_bucket_name = 'worker-place-snapshots'
+
+[[services]]
+binding = 'HEART'
+service = 'heart'
+environment = 'production'
