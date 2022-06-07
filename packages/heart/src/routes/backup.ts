@@ -15,8 +15,11 @@ useComet<HeartEnvironment, TBody>({
     await event.env.BACKUP.put(key, data)
     await event.env.SNAPSHOTS.delete(key)
     return event.reply.ok()
-  } catch (error) {
-    console.log('[backup] PNG conversion failed', error)
+  } catch (error: unknown) {
+    // @ts-expect-error ...
+    console.log('[backup] PNG conversion failed', error.message)
+    // @ts-expect-error ...
+    console.log(error.stack)
     return event.reply.internalServerError('PNG conversion failed')
   }
 })
