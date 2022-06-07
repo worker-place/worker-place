@@ -1,5 +1,5 @@
 <template>
-  <Container article class="fix-my-background" max>
+  <Container max>
     <Container center max>
       <canvas ref="canvas" />
     </Container>
@@ -91,14 +91,8 @@
 <style lang="scss" scoped>
   canvas {
     aspect-ratio: 1 / 1;
-    background: var(--background-2);
+    background: var(--background-3);
     max-height: 100%;
     max-width: 100%;
-  }
-</style>
-
-<style lang="scss">
-  div.fix-my-background {
-    background: var(--background);
   }
 </style>
