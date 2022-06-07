@@ -70,7 +70,7 @@
 
     console.log(`Joining ${squad}`)
     if (user.value?.squadId) {
-      const resp = await fetch(`/api/squad/:${squad.id}/leave`, {
+      const resp = await fetch(`/api/squad/${squad.id}/leave`, {
         method: 'POST',
         body: JSON.stringify({
           userId: user.value?.id
