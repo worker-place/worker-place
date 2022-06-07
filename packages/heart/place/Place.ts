@@ -11,7 +11,7 @@ export class Place {
   mem: Partial<PlaceEnvironment>
 
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
-    console.log('Place constructor')
+    console.log('Place constructor run')
     this.state = state
     this.env = env
     this.mem = {
