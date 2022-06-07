@@ -5,9 +5,9 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   console.log('backup...')
   // eslint-disable-next-line unicorn/no-await-expression-member
   const keys = (await env.SNAPSHOTS.list()).keys.map(key => key.name)
+  console.log('keys: ')
+  console.log(keys)
   if (keys.length > 0) {
-    console.log('keys: ')
-    console.log(keys)
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
     console.log('Values:')
     console.log(values)
