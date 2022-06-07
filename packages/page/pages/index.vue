@@ -43,7 +43,7 @@
             click-background="primary"
             click-color="white"
             color="white"
-            :href="loginHref"
+            :href="loginUrl()"
             icon="github-logo"
             icon-color="white"
           >
@@ -59,7 +59,10 @@
 </template>
 
 <script lang="ts" setup>
-  const loginHref = `https://github.com/login/oauth/authorize?client_id=${useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID}`
+  import { loginUrl } from '../util/login'
+
+
+  // const loginHref = `https://github.com/login/oauth/authorize?client_id=${useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID}`
 
   const user = useUser()
   const squad = useSquad()
