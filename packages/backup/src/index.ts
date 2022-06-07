@@ -4,29 +4,22 @@ import { PNG } from 'pngjs/browser'
 async function doBackup(env: BackupEnvironment): Promise<unknown> {
   console.log('backup...')
   // eslint-disable-next-line unicorn/no-await-expression-member
-  const keys = (await env.SNAPSHOTS.list()).keys.map(key => key.name)
+  const keys = (await env.SNAPSHOTS.list({ limit: 10 })).keys.map(key => key.name)
   if (keys.length > 0) {
-    const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, 'arrayBuffer')))
-    /*await Promise.all(values.filter(Boolean)
-      .map(each => {
-        console.log(each)
-        // @ts-expect-error ...
-        console.log(Object.keys(each))
-        // const result = new PNG().end(each).pack().data
-        const png = new PNG()
-        // @ts-expect-error ...
-        png.data = each
-        console.log('data is:')
-        console.log(result)
-      })
-      .map(each => {
-        // @ts-expect-error ...
-        env.BACKUP.put(new Date().toISOString(), each)
-        console.log('updated')
-      }))*/
-    const value = await env.SNAPSHOTS.get(keys[0], 'arrayBuffer')
-    console.log(value)
+    const pending = keys.map(async key => {
+      const value = await env.SNAPSHOTS.get(key, 'arrayBuffer')
+      if (!value) return
+      console.log(value)
+      console.log(Object.keys(value))
+      // const result = new PNG().end(each).pack().data
+      const png = new PNG()
+      png.data = value
+      console.log('data is:')
+      console.log(value)
+      return env.BACKUP.put(key, value)
+    })
 
+    await Promise.all(pending)
     return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
   }
 
