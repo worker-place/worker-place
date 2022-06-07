@@ -162,7 +162,7 @@
   .squad-entry {
     background: v-bind(cardbackground);
     border-radius: 10px;
-    padding: 8px 2rem 2rem 2rem;
+    padding: 8px 2rem 2rem;
   }
 
   .squad-content {
