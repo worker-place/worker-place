@@ -2,7 +2,7 @@ import { Method, useComet } from '@neoaren/comet'
 import { PNG } from 'pngjs/browser'
 
 
-type TBody = { key: string; value: ArrayBuffer }
+type TBody = { key: string; value: number[] }
 
 useComet<HeartEnvironment, TBody>({
   server: 'main',
@@ -11,7 +11,10 @@ useComet<HeartEnvironment, TBody>({
 }, async event => {
   const { key, value } = event.body
   try {
-    const data: ArrayBuffer = await parsePng(value)
+    const bytes = new Uint8Array(1024 * 1024 * 3)
+    bytes.set(value)
+    const data: ArrayBuffer = await parsePng(bytes)
+    console.log(data)
     await event.env.BACKUP.put(key, data)
     await event.env.SNAPSHOTS.delete(key)
     return event.reply.ok()
