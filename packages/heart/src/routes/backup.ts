@@ -10,16 +10,22 @@ useComet<HeartEnvironment, TBody>({
   pathname: '/api/backup'
 }, async event => {
   const { key, value } = event.body
+  console.log('a')
   try {
+    console.log('b')
     const bytes = new Uint8Array(1024 * 1024 * 3)
+    console.log('c')
     bytes.set(value)
-    console.log(value)
-    console.log(JSON.stringify([ ...bytes.slice(0, 10) ]))
+    console.log('d')
     const data: ArrayBuffer = await parsePng(bytes)
+    console.log('e')
     await event.env.BACKUP.put(key, data)
+    console.log('f')
     await event.env.SNAPSHOTS.delete(key)
+    console.log('g')
     return event.reply.ok()
   } catch (error: unknown) {
+    console.log('h')
     // @ts-expect-error ...
     console.log('[backup] PNG conversion failed', error.message)
     // @ts-expect-error ...
