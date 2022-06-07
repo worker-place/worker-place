@@ -65,7 +65,7 @@
                   Delete
                 </Button>
                 <Button v-if="mayTransferSquad(squad)" @click="transferSquadInit(squad)">
-                  Delete
+                  Transfer
                 </Button>
               </Container>
             </Container>
@@ -131,9 +131,12 @@
               Transfer this squad to another member
             </Text>
             <!-- eslint-disable-next-line vue/max-attributes-per-line -->
-            <Input v-model="newOwner" placeholder="The ID of the new owner" required type="number" />
+            <Input v-model="newOwner" placeholder="The ID of the new owner" required type="text" />
             <Button type="submit">
               Create
+            </Button>
+            <Button color="red" @click="cancelTransferSquad">
+              Close
             </Button>
           </Form>
         </Container>
@@ -274,11 +277,19 @@
     showTransferPopup.value = true
   }
 
+  function cancelTransferSquad() {
+    showTransferPopup.value = false
+    squadToTransfer.value = undefined
+    newOwner.value = undefined
+  }
+
   async function transferSquad() {
     if (!currentUser.value || !squadToTransfer.value || !newOwner.value) return
     const body = JSON.stringify({ to: newOwner.value })
-    const response = await fetch(`/api/squad/${squadToTransfer.value.id}/transfer`, { method: 'POST', body })
+    const headers = { 'content-type': 'application/json' }
+    const response = await fetch(`/api/squad/${squadToTransfer.value.id}/transfer`, { method: 'POST', headers, body })
     if (response.status !== 200) {
+      cancelTransferSquad()
       showTransferError.value = true
       return
     }
