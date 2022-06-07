@@ -12,6 +12,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
     console.log('Values:')
     console.log(values)
+    console.log('not doing anything...')
     /*await Promise.all(values.filter(Boolean)
       .map(each => {
         // @ts-expect-error ...
