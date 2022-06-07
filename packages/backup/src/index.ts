@@ -4,13 +4,15 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   const pending: Array<Promise<unknown>> = []
   if (keys.length > 0) {
     for (const key of keys) {
-      const value = await env.SNAPSHOTS.get(key, 'arrayBuffer') as Uint8Array
+      const buffer = await env.SNAPSHOTS.get(key, 'arrayBuffer')
+      if (!buffer) continue
+      const bytes = new Uint8Array(buffer, 0)
       pending.push(env.HEART.fetch('https://worker.place/api/backup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ key: key, value: [ ...value.values() ] })
+        body: JSON.stringify({ key: key, value: [ ...bytes.values() ] })
       }))
     }
 
