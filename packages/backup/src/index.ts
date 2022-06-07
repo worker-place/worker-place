@@ -5,7 +5,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   if (keys.length > 0) {
     for (const key of keys) {
       const value = await env.SNAPSHOTS.get(key)
-      pending.push(env.HEART.fetch('/api/backup', {
+      pending.push(env.HEART.fetch('https://worker.place/api/backup', {
         method: 'POST',
         body: JSON.stringify({ key: key, value: value })
       }))
