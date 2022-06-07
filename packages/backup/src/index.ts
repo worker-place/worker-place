@@ -13,7 +13,8 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     console.log('Values:')
     console.log(JSON.stringify(values))
     console.log('-----')
-    values.forEach(each => console.log(each))
+    // @ts-expect-error ...
+    values.forEach(each => console.log(Object.keys(each)))
     console.log('abc')
     console.log('not doing anything...')
     /*await Promise.all(values.filter(Boolean)
