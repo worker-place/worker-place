@@ -8,7 +8,6 @@ declare module 'pngjs/browser' {
     data: ArrayBuffer
     pack(): PNG
     parse(data: ArrayBuffer, callback: (error: Error, data: PNGData) => void): void
-    write(data: ArrayBuffer): void
   }
 }
 
