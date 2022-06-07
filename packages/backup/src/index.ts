@@ -10,6 +10,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
         body: JSON.stringify({ key: key, value: value })
       }))
     }
+
   }
 
   return Promise.all(pending)
