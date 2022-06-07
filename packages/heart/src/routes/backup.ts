@@ -14,9 +14,9 @@ useComet<HeartEnvironment, TBody>({
   try {
     console.log('b')
     const bytes = new Uint8Array(1024 * 1024 * 3)
-    console.log(JSON.stringify([ ...bytes.slice(0, 10) ]))
     console.log('c')
     bytes.set(value)
+    console.log(JSON.stringify([ ...bytes.slice(0, 10) ]))
     console.log('d')
     const data: ArrayBuffer = await parsePng(bytes)
     console.log('e')
