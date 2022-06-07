@@ -13,36 +13,38 @@
         </Button>
       </Form>
     </Container>
-    <Container article class="squad-container">
-      <template v-for="squad in squads" :key="squad.id">
-        <Container class="squad-entry">
-          <Container center>
-            <Text sectiontitle>
-              {{ squad.name }}
-            </Text>
-          </Container>
-          <Separator />
-          <Container class="squad-content">
-            <Container class="squad-image-container">
-              <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
-            </Container>
-            <Container class="squad-info-container">
-              <Text>
-                Owner: {{ squad.owner }}
+    <Container article>
+      <Container article class="squad-container">
+        <template v-for="squad in squads" :key="squad.id">
+          <Container class="squad-entry">
+            <Container center>
+              <Text sectiontitle>
+                {{ squad.name }}
               </Text>
-              <Text>
-                Member count: {{ squad.memberCount }}
-              </Text>
-              <Button v-if="mayJoin(squad)" @click="join(squad)">
-                Join
-              </Button>
-              <Button v-if="mayLeave(squad)" @click="leave(squad)">
-                Leave
-              </Button>
+            </Container>
+            <Separator />
+            <Container class="squad-content">
+              <Container class="squad-image-container">
+                <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
+              </Container>
+              <Container class="squad-info-container">
+                <Text>
+                  Owner: {{ squad.owner }}
+                </Text>
+                <Text>
+                  Member count: {{ squad.memberCount }}
+                </Text>
+                <Button v-if="mayJoin(squad)" @click="join(squad)">
+                  Join
+                </Button>
+                <Button v-if="mayLeave(squad)" @click="leave(squad)">
+                  Leave
+                </Button>
+              </Container>
             </Container>
           </Container>
-        </Container>
-      </template>
+        </template>
+      </Container>
     </Container>
   </Container>
 </template>
