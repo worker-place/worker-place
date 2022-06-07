@@ -45,7 +45,7 @@
       }
       await new Promise(resolve => setTimeout(resolve, delay))
 
-      socket = new WebSocket('ws://localhost:8787/api/connect')
+      socket = new WebSocket('wss://worker.place/api/connect')
 
       socket.addEventListener('open', () => {
         console.log('connected')
@@ -74,9 +74,6 @@
       })
 
       socket.addEventListener('close', async event => {
-        if (!event.wasClean) {
-          delay *= 2
-        }
         connectAfterDelay()
       })
     }
