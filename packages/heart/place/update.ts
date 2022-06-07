@@ -3,7 +3,9 @@ import { PlaceEnvironment, Squad } from './types'
 
 function targetToImageIndex(index: number, squad: Squad): number {
   const { top, left, height, width } = squad.target
-  return (top + Math.floor(index / height)) * 1024 + left + index % width
+  const x = (left * 3) + index % (width * 3)
+  const y = top + Math.floor(index / height)
+  return y * (1024 * 3) + x
 }
 
 function draw(squad: Squad, image: Uint8Array): number {
