@@ -78,7 +78,12 @@ export class Place {
     await this.state.storage.put('next_alarm_date', alarm + 1000 * 20)
 
     this.mem.SESSIONS?.forEach(session => {
-      session.send(this.mem.IMAGE!)
+      try {
+        session.send(this.mem.IMAGE!)
+      } catch {
+        console.warn('[Place DO] (alarm): error sending to session')
+        this.mem.SESSIONS?.splice(this.mem.SESSIONS?.indexOf(session), 1)
+      }
     })
 
     if (this.mem.IMAGE) {
