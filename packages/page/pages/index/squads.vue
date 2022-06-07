@@ -109,6 +109,8 @@
       return false
     }
 
+    user.value!.squadId = undefined
+    squad.memberCount--
     return true
   }
 
