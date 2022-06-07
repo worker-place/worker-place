@@ -80,8 +80,6 @@
   import { loginUrl } from '../util/login'
 
 
-  // const loginHref = `https://github.com/login/oauth/authorize?client_id=${useRuntimeConfig().public.GITHUB_OAUTH_CLIENT_ID}`
-
   const user = useUser()
   const squad = useSquad()
   const displayLogin = ref<boolean>(true)

@@ -126,7 +126,7 @@
   }
 
   async function joinSquad(squad: Squad) {
-    if (!currentUser.value) return useRouter().push(loginUrl())
+    if (!currentUser.value) return navigateTo(loginUrl())
     const response = await fetch(`/api/squad/${squad.id}/join`, { method: 'POST' })
     if (response.status !== 200) {
       showJoinError.value = true
