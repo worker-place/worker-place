@@ -1,6 +1,6 @@
 <template>
   <Container max>
-    <Container article padded>
+    <Container v-if="mayCreateSquad()" article padded>
       <Form @submit="createSquad">
         <Input type="file" @change="onFileChange">
           File
@@ -38,11 +38,14 @@
                 <Text>
                   Member count: {{ squad.memberCount }}
                 </Text>
-                <Button v-if="mayJoin(squad)" @click="join(squad)">
+                <Button v-if="mayJoinSquad()" @click="joinSquad(squad)">
                   Join
                 </Button>
-                <Button v-if="mayLeave(squad)" @click="leave(squad)">
+                <Button v-if="mayLeaveSquad(squad)" @click="leaveSquad(squad)">
                   Leave
+                </Button>
+                <Button v-if="mayDeleteSquad(squad)" @click="deleteSquad(squad)">
+                  Delete
                 </Button>
               </Container>
             </Container>
@@ -50,6 +53,46 @@
         </template>
       </Container>
     </Container>
+    <Popup v-if="showJoinError">
+      <Container center class="popup">
+        <Text>
+          Joining squad failed, please try again later
+        </Text>
+        <Button color="red" @click="showJoinError = false">
+          Close
+        </Button>
+      </Container>
+    </Popup>
+    <Popup v-if="showLeaveError">
+      <Container center class="popup">
+        <Text>
+          Leaving squad failed, please try again later
+        </Text>
+        <Button color="red" @click="showLeaveError = false">
+          Close
+        </Button>
+      </Container>
+    </Popup>
+    <Popup v-if="showDeleteError">
+      <Container center class="popup">
+        <Text>
+          Deleting squad failed, please try again later
+        </Text>
+        <Button color="red" @click="showDeleteError = false">
+          Close
+        </Button>
+      </Container>
+    </Popup>
+    <Popup v-if="showCreateError">
+      <Container center class="popup">
+        <Text>
+          Creating squad failed, please try again later
+        </Text>
+        <Button color="red" @click="showCreateError = false">
+          Close
+        </Button>
+      </Container>
+    </Popup>
   </Container>
 </template>
 
@@ -58,75 +101,85 @@
   import { loginUrl } from '../../util/login'
 
 
-  type SquadsResponseSchema = { squads: Squad[] }
+  const showJoinError = ref<boolean>()
+  const showLeaveError = ref<boolean>()
+  const showDeleteError = ref<boolean>()
+  const showCreateError = ref<boolean>()
 
+  const currentUser = useUser()
+  const currentSquad = useSquad()
   const squads = ref<Array<Squad>>([])
-  const user = useUser()
   const cardbackground = useThemeColor('background')
 
   onMounted(async () => {
     const response = await fetch('/api/squad')
     if (response.status === 200) {
-      const data = await response.json() as SquadsResponseSchema
+      const data = await response.json() as { squads: Squad[] }
       squads.value = data.squads
     }
   })
 
-  function mayJoin(squad: Squad) {
-    return user.value?.squadId !== squad.id
+  // JOIN SQUAD
+
+  function mayJoinSquad() {
+    return currentUser.value?.squadId === undefined
   }
 
-  async function join(squad: Squad) {
-    const currentUser = user.value
-    if (!currentUser) {
-      useRouter().push(loginUrl())
+  async function joinSquad(squad: Squad) {
+    if (!currentUser.value) return useRouter().push(loginUrl())
+    const response = await fetch(`/api/squad/${squad.id}/join`, { method: 'POST' })
+    if (response.status !== 200) {
+      showJoinError.value = true
       return
     }
-
-    console.log(`Joining ${squad}`)
-    if (user.value?.squadId) {
-      const result = await leave(squad)
-      if (!result) return
-    }
-
-    const resp = await fetch(`/api/squad/${squad.id}/join`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userId: user.value?.id
-      })
-    })
-
-    if (resp.status !== 200) {
-      console.log('Failed to join squad')
-    } else {
-      user.value!.squadId = squad.id
-      squad.memberCount++
-    }
+    squad.memberCount++
+    currentUser.value.squadId = squad.id
+    currentSquad.value = squad
+    squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
   }
 
-  function mayLeave(squad: Squad) {
-    return user.value && user.value.squadId === squad.id
+  // LEAVE SQUAD
+
+  function mayLeaveSquad(squad: Squad) {
+    return currentUser.value?.squadId === squad.id && currentUser.value?.id !== squad.owner
   }
 
-  async function leave(squad: Squad) {
-    const resp = await fetch(`/api/squad/${squad.id}/leave`, {
-      method: 'POST',
-      body: JSON.stringify({
-        userId: user.value?.id
-      })
-    })
-
-    if (resp.status !== 200) {
-      console.log('Failed to leave squad')
-      return false
+  async function leaveSquad(squad: Squad) {
+    if (!currentUser.value) return
+    const response = await fetch(`/api/squad/${squad.id}/leave`, { method: 'POST' })
+    if (response.status !== 200) {
+      showLeaveError.value = true
+      return
     }
-
-    user.value!.squadId = undefined
     squad.memberCount--
-    return true
+    currentUser.value.squadId = undefined
+    currentSquad.value = undefined
+    squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
+  }
+
+  // DELETE SQUAD
+
+  function mayDeleteSquad(squad: Squad) {
+    return currentUser.value?.squadId === squad.id && currentUser.value?.id === squad.owner
+  }
+
+  async function deleteSquad(squad: Squad) {
+    if (!currentUser.value) return
+    const response = await fetch(`/api/squad/${squad.id}`, { method: 'DELETE' })
+    if (response.status !== 200) {
+      showDeleteError.value = true
+      return
+    }
+    currentUser.value.squadId = undefined
+    currentSquad.value = undefined
+    squads.value = squads.value.filter(x => x.id !== squad.id)
   }
 
   // CREATE SQUAD
+
+  function mayCreateSquad() {
+    return currentUser.value?.squadId === undefined
+  }
 
   const file = ref<File>()
   const name = ref<string>()
@@ -138,15 +191,21 @@
   }
 
   async function createSquad() {
-    if (!file.value || !name.value || !top.value || !left.value) return
+    if (!currentUser.value || !file.value || !name.value || !top.value || !left.value) return
     const formData = new FormData()
     formData.append('name', name.value)
     formData.append('image', file.value)
     formData.append('top', top.value)
     formData.append('left', left.value)
     const response = await fetch('/api/squad', { method: 'POST', body: formData })
-    const data = response.headers.get('content-type') === 'application/json' ? await response.json() : await response.text()
-    console.log(response.status, data)
+    if (response.status !== 200) {
+      showCreateError.value = true
+      return
+    }
+    const data = await response.json() as { squad: Squad }
+    currentUser.value.squadId = data.squad.id
+    currentSquad.value = data.squad
+    squads.value = [ ...squads.value, data.squad ]
   }
 </script>
 
