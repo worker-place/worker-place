@@ -5,6 +5,13 @@
       <Text center title>
         How does worker.place work
       </Text>
+      <Text>
+        After joining a squad, lean back and see how you and your squad can paint your desired image.
+        Every 20 seconds, a <AutoLink href="https://blog.cloudflare.com/durable-objects-alarms/">Durable Object Alarm</AutoLink> is triggered. This handles updating one pixel per member for each squad.
+        <AutoLink href="/about" :weight="500">
+          Learn more about the project here
+        </AutoLink>
+      </Text>
       <Text sectiontitle>
         How can I sign up?
       </Text>

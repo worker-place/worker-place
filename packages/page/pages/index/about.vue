@@ -31,10 +31,27 @@
         </Text> of them.
       </Text>
       <Text subtitle>
-        How we built worker.place
-      </Text>
-      <Text subtitle>
         How worker.place uses Workers (and other cool tech)
+      </Text>
+      <Text>
+        We use one Worker (page) to server-side render the page. It is also the one responsible for proxying R2 requests to the R2 bucket storing all squad target images.
+      </Text>
+      <Text>
+        We use Pages to serve static assets very quickly (unfortunately Functions doesn't yet support all features we needed). <AutoLink href="https://walshy.rocks" :weight="200">walshy.rocks</AutoLink>?
+      </Text>
+      <Text>
+        We use KV to store session tokens (don't worry, hashed) and temporarily the snapshots of worker.place.
+      </Text>
+      <Text>
+        We heavily rely on our 'Place' Durable Object, it's singleton manages squads with their target images, and the place itself.<br></br>
+        It contains the alarm responsible for updating the place, and then pushing the update to all connected users (and the snapshots).
+      </Text>
+      <Text>
+        As mentioned above, we use R2 to store all past snapshots of the place, as well as all target images of squads.
+      </Text>
+      <Text important italic>5 > 2</Text>
+      <Text>
+        For mode details, feel free to check our <AutoLink href="https://github.com/worker-place/worker-place" :weight="500">GitHub repo</AutoLink>.
       </Text>
       <Text subtitle>
         Meet the team

@@ -78,7 +78,7 @@ export class Place {
     await this.state.storage.put('next_alarm_date', alarm + 1000 * 20)
 
     this.mem.SESSIONS?.forEach(session => {
-      session.send(JSON.stringify([ ...this.mem.IMAGE!.slice(0, 10) ]))
+      session.send(this.mem.IMAGE!)
     })
 
     if (this.mem.IMAGE) {
@@ -108,7 +108,7 @@ export class Place {
   async connect(request: Request): Promise<Response> {
     const session = new WebSocketPair()
     session[1].accept()
-    this.mem.SESSIONS?.push(session[1])
+    let handshake = false
 
     session[1].addEventListener('close', async event => {
       this.mem.SESSIONS?.splice(this.mem.SESSIONS?.indexOf(session[1]), 1)
@@ -119,7 +119,11 @@ export class Place {
     session[1].addEventListener('message', async event => {
       if (event.data) {
         console.log('[Place DO] (connect): websocket onmessage, send back image')
-        session[1].send(this.mem.IMAGE!)
+        if (!handshake) {
+          handshake = true
+          this.mem.SESSIONS?.push(session[1])
+          session[1].send(this.mem.IMAGE!)
+        }
       }
     })
 

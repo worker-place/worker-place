@@ -7,30 +7,29 @@
 </template>
 
 <script lang="ts" setup>
-  let observer: ResizeObserver | undefined
   const source = ref('')
+  const socket = ref<WebSocket>()
+  const delay = ref(0)
 
   onMounted(() => {
     let lastbuffer: Uint8ClampedArray | undefined
-    let socket: WebSocket
-    let delay = 0
 
     async function connectAfterDelay() {
-      if (delay > 20000) {
+      if (delay.value > 20000) {
         return
       }
-      await new Promise(resolve => setTimeout(resolve, delay))
+      await new Promise(resolve => setTimeout(resolve, delay.value))
 
-      socket = new WebSocket('wss://worker.place/api/connect')
+      socket.value = new WebSocket('wss://worker.place/api/connect')
 
-      socket.addEventListener('open', () => {
+      socket.value.addEventListener('open', () => {
         console.log('connected')
 
-        socket.send('hello')
-        delay = 500
+        socket.value?.send('hello')
+        delay.value = 500
       })
 
-      socket.addEventListener('message', async event => {
+      socket.value.addEventListener('message', async event => {
         if (event.data) {
           const buffer = await (event.data as Blob).arrayBuffer()
           const uintBuffer = new Uint8Array(buffer)
@@ -53,7 +52,8 @@
         }
       })
 
-      socket.addEventListener('close', async event => {
+      socket.value.addEventListener('close', async event => {
+        delay.value *= 2
         connectAfterDelay()
       })
     }
@@ -62,9 +62,7 @@
   })
 
   onBeforeUnmount(() => {
-    if (observer) {
-      observer.disconnect()
-    }
+    socket.value?.close()
   })
 </script>
 
