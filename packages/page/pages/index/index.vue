@@ -91,7 +91,14 @@
 <style lang="scss" scoped>
   canvas {
     aspect-ratio: 1 / 1;
+    background: var(--background-2);
     max-height: 100%;
     max-width: 100%;
+  }
+</style>
+
+<style lang="scss">
+  main {
+    background: unset;
   }
 </style>

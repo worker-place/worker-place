@@ -22,21 +22,26 @@
             </Text>
           </Container>
           <Separator />
-          <Text>
-            Owner: {{ squad.owner }}
-          </Text>
-          <Text>
-            Member count: {{ squad.memberCount }}
-          </Text>
-          <Button v-if="mayJoin(squad)" @click="join(squad)">
-            Join
-          </Button>
-          <Button v-if="mayLeave(squad)" @click="leave(squad)">
-            Leave
-          </Button>
-          <Separator />
-          <Image alt="Squad image" :source="`https://worker.place/api/image?id=${squad.id}`" />
-          <Separator />
+          <Container class="squad-content">
+            <Container class="squad-content-block">
+              <Text>
+                Owner: {{ squad.owner }}
+              </Text>
+              <Text>
+                Member count: {{ squad.memberCount }}
+              </Text>
+              <Button v-if="mayJoin(squad)" @click="join(squad)">
+                Join
+              </Button>
+              <Button v-if="mayLeave(squad)" @click="leave(squad)">
+                Leave
+              </Button>
+            </Container>
+            <Container class="squad-block">
+              <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
+              <Text>{{ squad.target.width }} x {{ squad.target.height }}</Text>
+            </Container>
+          </Container>
         </Container>
       </template>
     </Container>
@@ -150,5 +155,20 @@
     background: v-bind(cardbackground);
     border-radius: 10px;
     padding: 2rem;
+  }
+
+  .squad-content {
+    flex-direction: row;
+  }
+
+  .squad-content-block {
+    //flex: 1;
+  }
+
+  .squad-image {
+    max-height: 128px;
+    max-width: 128px;
+    object-fit: contain;
+    object-position: center center;
   }
 </style>
