@@ -147,8 +147,8 @@
 <style lang="scss" scoped>
   .squad-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    grid-template-columns: 1fr 1fr;
     margin: 2rem 0;
   }
 
@@ -176,6 +176,4 @@
     max-height: 128px;
     max-width: 128px;
   }
-
-  .squad-info-container {}
 </style>
