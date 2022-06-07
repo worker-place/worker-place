@@ -4,7 +4,7 @@ import { PNG } from 'pngjs/browser'
 async function doBackup(env: BackupEnvironment): Promise<unknown> {
   console.log('backup...')
   // eslint-disable-next-line unicorn/no-await-expression-member
-  const keys = (await env.SNAPSHOTS.list()).keys.map(key => key.name)
+  const keys = (await env.SNAPSHOTS.list()).keys.map(key => key.name).splice(0, 10)
   console.log('keys: ')
   console.log(keys)
   if (keys.length > 0) {
@@ -26,9 +26,9 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
       }))
 
     return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
-  } else {
-    console.log('keys.length < 0')
   }
+
+  console.log('keys.length < 0')
 }
 
 export default {
