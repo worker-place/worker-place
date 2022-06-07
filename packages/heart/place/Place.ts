@@ -11,7 +11,6 @@ export class Place {
   mem: Partial<PlaceEnvironment>
 
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
-    console.log('Place constructor run')
     this.state = state
     this.env = env
     this.mem = {
@@ -20,49 +19,52 @@ export class Place {
     }
 
     this.state.blockConcurrencyWhile(async () => {
-      console.log('Place blockConcurrencyWhile')
+      console.log('[Place DO] (blockConcurrencyWhile): begin')
       await this.loadImage()
       await this.setupAlarm()
+      console.log('[Place DO] (blockConcurrencyWhile): end')
     })
   }
 
   async loadImage() {
-    console.log('Begin loading image')
+    console.log('[Place DO] (loadImage): begin')
     for (let i = 0; i < 25; i++) {
-      console.log('Loading image piece', i)
       const piece = await this.state.storage.get<Uint8Array>(`stored_image_${i}`)
       if (!piece) {
         // deliberate overhead, max would be 128*1024
-        console.log('No piece found', i)
         this.mem.IMAGE?.fill(4, i * 128000, (i + 1) * 128000)
       } else {
-        console.log('Piece found', i)
         this.mem.IMAGE?.set(piece, i * 128000)
       }
     }
-    console.log('Done loading image')
+    console.log('[Place DO] (loadImage): end')
   }
 
   async saveImage() {
+    console.log('[Place DO] (saveImage): begin')
     const writes = []
     for (let i = 0; i < 25; i++) {
       const piece = i === 24 ? this.mem.IMAGE?.slice(i * 128000) : this.mem.IMAGE?.slice(i * 128000, (i + 1) * 128000)
       writes.push(this.state.storage.put(`stored_image_${i}`, piece))
     }
     await Promise.all(writes)
+    console.log('[Place DO] (saveImage): end')
   }
 
   async setupAlarm() {
-    console.log('Place setupAlarm called')
-    if (await this.state.storage.getAlarm() === null) {
+    console.log('[Place DO] (setupAlarm): begin')
+    const alarm = await this.state.storage.getAlarm()
+    console.log('[Place DO] (setupAlarm): alarm is', alarm)
+    if (alarm === null) {
       const date = Date.now() + 1000
       await this.state.storage.setAlarm(date)
       await this.state.storage.put('next_alarm_date', date)
     }
+    console.log('[Place DO] (setupAlarm): end')
   }
 
   async alarm() {
-    console.log('Place alarm fired')
+    console.log('[Place DO] (alarm): begin')
 
     await update(this.state, { ...this.env, ...this.mem })
     await this.saveImage()
@@ -82,11 +84,11 @@ export class Place {
       await this.env.SNAPSHOTS.put(crypto.randomUUID().toString(), this.mem.IMAGE)
     }
 
-    console.log('Place alarm done')
+    console.log('[Place DO] (alarm): end')
   }
 
   async fetch(request: Request): Promise<Response> {
-    console.log('fetch', request.url)
+    console.log('[Place DO] (fetch): url', request.url)
     await this.saveImage()
     switch (new URL(request.url).pathname) {
       case '/api/connect':
@@ -116,7 +118,7 @@ export class Place {
     })
     session[1].addEventListener('message', async event => {
       if (event.data) {
-        console.log('data')
+        console.log('[Place DO] (connect): websocket onmessage, send back image')
         session[1].send(this.mem.IMAGE!)
       }
     })
