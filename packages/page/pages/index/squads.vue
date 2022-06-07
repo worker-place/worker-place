@@ -25,7 +25,12 @@
             <Separator />
             <Container class="squad-content">
               <Container class="squad-image-container">
-                <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
+                <Image
+                  alt="Squad image"
+                  class="squad-image"
+                  rounded
+                  :source="`https://worker.place/api/image?id=${squad.id}`"
+                />
               </Container>
               <Container class="squad-info-container">
                 <Text>
@@ -157,16 +162,17 @@
   .squad-entry {
     background: v-bind(cardbackground);
     border-radius: 10px;
-    padding: 2rem;
+    padding: 8px 2rem 2rem 2rem;
   }
 
   .squad-content {
     display: flex;
     flex-direction: row;
+    padding-top: 8px;
   }
 
   .squad-image-container {
-    border: 1px solid #999;
+    background: var(--background);
     display: grid;
     height: 128px;
     margin-right: 2rem;
