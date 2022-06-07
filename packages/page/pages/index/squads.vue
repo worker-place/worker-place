@@ -1,6 +1,6 @@
 <template>
-  <Container>
-    <Container article max padded>
+  <Container article max>
+    <Container padded>
       <Form @submit="createSquad">
         <Input type="file" @change="onFileChange">
           File
