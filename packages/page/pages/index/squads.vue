@@ -14,7 +14,7 @@
       </Form>
     </Container>
     <Container article>
-      <Container article class="squad-container">
+      <Container class="squad-container">
         <template v-for="squad in squads" :key="squad.id">
           <Container class="squad-entry">
             <Container center>
