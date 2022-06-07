@@ -37,6 +37,7 @@
         </template>
         <template #menubar-right>
           <MenubarLink
+            v-if="displayLogin"
             active-background="primary"
             active-color="white"
             background="primary"
@@ -46,6 +47,7 @@
             :href="loginUrl()"
             icon="github-logo"
             icon-color="white"
+            icon-variant="bold"
           >
             login
           </MenubarLink>
