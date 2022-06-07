@@ -23,7 +23,10 @@
           </Container>
           <Separator />
           <Container class="squad-content">
-            <Container class="squad-content-block">
+            <Container class="squad-image-container">
+              <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
+            </Container>
+            <Container class="squad-info-container">
               <Text>
                 Owner: {{ squad.owner }}
               </Text>
@@ -36,9 +39,6 @@
               <Button v-if="mayLeave(squad)" @click="leave(squad)">
                 Leave
               </Button>
-            </Container>
-            <Container class="squad-block">
-              <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
             </Container>
           </Container>
         </Container>
@@ -146,7 +146,9 @@
 
 <style lang="scss" scoped>
   .squad-container {
+    display: grid;
     gap: 1rem;
+    grid-template-columns: 1fr 1fr;
     margin: 2rem 0;
   }
 
@@ -161,14 +163,17 @@
     flex-direction: row;
   }
 
-  .squad-content-block {
-    //flex: 1;
+  .squad-image-container {
+    border: 1px solid #999;
+    display: grid;
+    height: 128px;
+    margin-right: 2rem;
+    place-items: center;
+    width: 128px;
   }
 
   .squad-image {
     max-height: 128px;
     max-width: 128px;
-    object-fit: contain;
-    object-position: center center;
   }
 </style>
