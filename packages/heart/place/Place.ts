@@ -78,7 +78,9 @@ export class Place {
       session.send(this.mem.IMAGE!)
     })
 
-    // TODO save this.mem.IMAGE to KV
+    if (this.mem.IMAGE) {
+      await this.env.SNAPSHOTS.put(crypto.randomUUID().toString(), this.mem.IMAGE)
+    }
 
     console.log('Place alarm done')
   }
