@@ -89,20 +89,25 @@ export class Place {
   }
 
   async fetch(request: Request): Promise<Response> {
-    console.log('[Place DO] (fetch): url', request.url)
-    switch (new URL(request.url).pathname) {
-      case '/api/connect':
-        return this.connect(request)
-    }
-
-    return comet({
-      name: 'place'
-    })(request, { ...this.env, ...this.mem }, {
-      waitUntil: this.state.waitUntil,
-      passThroughOnException() {
-        console.warn('context.passThroughOnException() is not supported in this environment')
+    try {
+      console.log('[Place DO] (fetch): url', request.url)
+      switch (new URL(request.url).pathname) {
+        case '/api/connect':
+          return this.connect(request)
       }
-    }, this.state)
+
+      return comet({
+        name: 'place'
+      })(request, { ...this.env, ...this.mem }, {
+        waitUntil: this.state.waitUntil,
+        passThroughOnException() {
+          console.warn('context.passThroughOnException() is not supported in this environment')
+        }
+      }, this.state)
+    } catch (error) {
+      console.error('[Place DO] (fetch): error', error)
+      return new Response('', { status: 500 })
+    }
   }
 
   async connect(request: Request): Promise<Response> {
