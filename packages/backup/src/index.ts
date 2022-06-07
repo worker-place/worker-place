@@ -7,6 +7,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
       const buffer = await env.SNAPSHOTS.get(key, 'arrayBuffer')
       if (!buffer) continue
       const bytes = new Uint8Array(buffer, 0)
+      JSON.stringify([ ...bytes.slice(0, 10) ])
       pending.push(env.HEART.fetch('https://worker.place/api/backup', {
         method: 'POST',
         headers: {
