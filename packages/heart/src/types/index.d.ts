@@ -21,3 +21,5 @@ interface HeartEnvironment {
   SNAPSHOTS: KVNamespace
   SQUAD_IMAGES: R2Bucket
 }
+
+type Buffer = ArrayBuffer
