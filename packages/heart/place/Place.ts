@@ -11,7 +11,7 @@ export class Place {
   mem: Partial<PlaceEnvironment>
 
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
-    console.log('[Place DO] (constructor)')
+    console.log('[Place DO] (constructor): begin')
     this.state = state
     this.env = env
     this.mem = {
@@ -25,6 +25,7 @@ export class Place {
       await this.setupAlarm()
       console.log('[Place DO] (blockConcurrencyWhile): end')
     })
+    console.log('[Place DO] (constructor): end')
   }
 
   async loadImage() {
