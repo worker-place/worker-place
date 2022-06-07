@@ -39,7 +39,6 @@
             </Container>
             <Container class="squad-block">
               <Image alt="Squad image" class="squad-image" :source="`https://worker.place/api/image?id=${squad.id}`" />
-              <Text>{{ squad.target.width }} x {{ squad.target.height }}</Text>
             </Container>
           </Container>
         </Container>
@@ -158,6 +157,7 @@
   }
 
   .squad-content {
+    display: flex;
     flex-direction: row;
   }
 
