@@ -136,7 +136,7 @@
             <Input v-model="newOwner" placeholder="The ID of the new owner" required type="text" />
             <ButtonGroup>
               <Button type="submit">
-                Create
+                Transfer
               </Button>
               <Button color="red" @click="closeTransferSquadPopup">
                 Close
