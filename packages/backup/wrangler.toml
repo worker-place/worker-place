@@ -1,21 +1,14 @@
 name = 'worker-place-backup'
 workers_dev = false
-account_id = 'd0238d3a1eebca7fc036cb766a5e538f'
+account_id = 'ACCOUNT_ID'
 routes = []
 compatibility_date = '2022-05-28'
-compatibility_flags = [ 'durable_object_alarms', 'url_standard' ]
+compatibility_flags = [ 'url_standard' ]
 main = 'src/index.ts'
 
 kv_namespaces = [
     { binding = 'SNAPSHOTS', id = '0c5060bc540f4eb1aa24ee55d2644e2a', preview_id = '0c5060bc540f4eb1aa24ee55d2644e2a' }
 ]
-
-[miniflare]
-build_watch_dirs = [ 'place', 'src' ]
-
-[[migrations]]
-tag = '2022-05-21'
-new_classes = [ 'Place' ]
 
 [triggers]
 crons = [ '*/1 * * * *' ]
