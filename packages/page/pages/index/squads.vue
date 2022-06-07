@@ -61,12 +61,14 @@
                 <Button v-if="mayLeaveSquad(squad)" @click="leaveSquad(squad)">
                   Leave
                 </Button>
-                <Button v-if="mayDeleteSquad(squad)" @click="deleteSquad(squad)">
-                  Delete
-                </Button>
-                <Button v-if="mayTransferSquad(squad)" @click="transferSquadInit(squad)">
-                  Transfer
-                </Button>
+                <ButtonGroup v-if="isOwnerOf(squad)">
+                  <Button @click="deleteSquad(squad)">
+                    Delete
+                  </Button>
+                  <Button @click="transferSquadInit(squad)">
+                    Transfer
+                  </Button>
+                </ButtonGroup>
               </Container>
             </Container>
           </Container>
@@ -132,12 +134,14 @@
             </Text>
             <!-- eslint-disable-next-line vue/max-attributes-per-line -->
             <Input v-model="newOwner" placeholder="The ID of the new owner" required type="text" />
-            <Button type="submit">
-              Create
-            </Button>
-            <Button color="red" @click="cancelTransferSquad">
-              Close
-            </Button>
+            <ButtonGroup>
+              <Button type="submit">
+                Create
+              </Button>
+              <Button color="red" @click="closeTransferSquadPopup">
+                Close
+              </Button>
+            </ButtonGroup>
           </Form>
         </Container>
       </Popup>
@@ -246,7 +250,7 @@
 
   // DELETE SQUAD
 
-  function mayDeleteSquad(squad: Squad) {
+  function isOwnerOf(squad: Squad) {
     return currentUser.value?.squadId === squad.id && currentUser.value?.id === squad.owner
   }
 
@@ -268,16 +272,12 @@
   const squadToTransfer = ref<Squad>()
   const newOwner = ref<string>()
 
-  function mayTransferSquad(squad: Squad) {
-    return currentUser.value?.squadId === squad.id && currentUser.value?.id === squad.owner
-  }
-
   function transferSquadInit(squad: Squad) {
     squadToTransfer.value = squad
     showTransferPopup.value = true
   }
 
-  function cancelTransferSquad() {
+  function closeTransferSquadPopup() {
     showTransferPopup.value = false
     squadToTransfer.value = undefined
     newOwner.value = undefined
@@ -289,7 +289,7 @@
     const headers = { 'content-type': 'application/json' }
     const response = await fetch(`/api/squad/${squadToTransfer.value.id}/transfer`, { method: 'POST', headers, body })
     if (response.status !== 200) {
-      cancelTransferSquad()
+      closeTransferSquadPopup()
       showTransferError.value = true
       return
     }
@@ -297,8 +297,7 @@
     squad.owner = newOwner.value
     currentSquad.value = squad
     squads.value = squads.value.map(x => x.id !== squad.id ? x : squad)
-    squadToTransfer.value = undefined
-    newOwner.value = undefined
+    closeTransferSquadPopup()
   }
 
 
@@ -382,6 +381,7 @@
   }
 
   .popup {
+    background: var(--background-2);
     padding: 2rem;
   }
 </style>
