@@ -191,7 +191,7 @@
   }
 
   async function joinSquad(squad: Squad) {
-    if (!currentUser.value) return navigateTo(loginUrl())
+    if (!currentUser.value) return location.replace(loginUrl())
     const response = await fetch(`/api/squad/${squad.id}/join`, { method: 'POST' })
     if (response.status !== 200) {
       showJoinError.value = true
@@ -304,7 +304,7 @@
   // CREATE SQUAD
 
   function mayCreateSquad() {
-    return currentUser.value?.squadId === undefined
+    return currentUser.value && currentUser.value?.squadId === undefined
   }
 
   const file = ref<File>()
