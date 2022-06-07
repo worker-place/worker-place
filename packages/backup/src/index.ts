@@ -11,7 +11,8 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     console.log('keys.length > 0')
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
     console.log('Values:')
-    console.log(values)
+    console.log(JSON.stringify(values))
+    values.forEach(each => console.log(each))
     console.log('not doing anything...')
     /*await Promise.all(values.filter(Boolean)
       .map(each => {
