@@ -12,7 +12,8 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
     const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
     console.log('Values:')
     console.log(values)
-    await Promise.all(values.filter(Boolean)
+    console.log('not doing anything...')
+    /*await Promise.all(values.filter(Boolean)
       .map(each => {
         // @ts-expect-error ...
         const result = new PNG().end(each).pack().data
@@ -23,7 +24,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
         // @ts-expect-error ...
         env.BACKUP.put(new Date().toISOString(), each)
         console.log('updated')
-      }))
+      }))*/
 
     return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
   }

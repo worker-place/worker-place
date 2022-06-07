@@ -40,6 +40,7 @@
 
 <script lang="ts" setup>
   import { Squad } from '../../types'
+  import { loginUrl } from '../../util/login'
 
 
   type SquadsResponseSchema = { squads: Squad[] }
@@ -60,9 +61,40 @@
     return user.value?.squadId !== squad.id
   }
 
-  function join(squad: Squad) {
+  async function join(squad: Squad) {
+    const currentUser = user.value
+    if (!currentUser) {
+      useRouter().push(loginUrl())
+      return
+    }
+
     console.log(`Joining ${squad}`)
-    // send request
+    if (user.value?.squadId) {
+      const resp = await fetch(`/api/squad/:${squad.id}/leave`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: user.value?.id
+        })
+      })
+
+      if (resp.status !== 200) {
+        console.log('Failed to leave old squad')
+        return
+      }
+    }
+
+    const resp = await fetch(`/api/squad/:${squad.id}/join`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId: user.value?.id
+      })
+    })
+
+    if (resp.status !== 200) {
+      console.log('Failed to join squad')
+    } else {
+      user.value!.squadId = squad.id
+    }
   }
 
   // CREATE SQUAD
