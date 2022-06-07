@@ -9,7 +9,7 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   console.log(keys)
   if (keys.length > 0) {
     console.log('keys.length > 0')
-    const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each, { type: 'arrayBuffer' })))
+    const values = await Promise.all(keys.map(each => env.SNAPSHOTS.get(each)))
     console.log('Values:')
     console.log(JSON.stringify(values))
     console.log('-----')
