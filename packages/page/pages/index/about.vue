@@ -50,8 +50,11 @@
         As mentioned above, we use R2 to store all past snapshots of the place, as well as all target images of squads.
       </Text>
       <Text important italic>5 > 2</Text>
+      <Text bold>
+        Goal achieved.
+      </Text>
       <Text>
-        For mode details, feel free to check our <AutoLink href="https://github.com/worker-place/worker-place" :weight="500">GitHub repo</AutoLink>.
+        For more details, feel free to check our <AutoLink href="https://github.com/worker-place/worker-place" :weight="500">GitHub repo</AutoLink> or find us on the Cloudflare Developers Discord server.
       </Text>
       <Text subtitle>
         Meet the team
