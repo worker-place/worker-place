@@ -346,6 +346,7 @@
   .squad-id {
     cursor: pointer;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .squad-content {
