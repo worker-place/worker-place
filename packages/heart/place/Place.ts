@@ -25,15 +25,20 @@ export class Place {
   }
 
   async loadImage() {
+    console.log('Begin loading image')
     for (let i = 0; i < 25; i++) {
+      console.log('Loading image piece', i)
       const piece = await this.state.storage.get<Uint8Array>(`stored_image_${i}`)
       if (!piece) {
         // deliberate overhead, max would be 128*1024
+        console.log('No piece found', i)
         this.mem.IMAGE?.fill(4, i * 128000, (i + 1) * 128000)
       } else {
+        console.log('Piece found', i)
         this.mem.IMAGE?.set(piece, i * 128000)
       }
     }
+    console.log('Done loading image')
   }
 
   async saveImage() {
