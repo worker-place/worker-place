@@ -35,7 +35,7 @@
             Leave
           </Button>
           <Separator />
-          <Image :source="`https://worker.place/api/image?id=${squad.id}`" />
+          <Image alt="Squad image" :source="`https://worker.place/api/image?id=${squad.id}`" />
           <Separator />
         </Container>
       </template>
