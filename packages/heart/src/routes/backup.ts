@@ -1,5 +1,5 @@
 import { Method, useComet } from '@neoaren/comet'
-import { PNG, PNGData } from 'pngjs/browser'
+import { PNG } from 'pngjs/browser'
 
 
 type TBody = { key: string; value: ArrayBuffer }
@@ -11,8 +11,8 @@ useComet<HeartEnvironment, TBody>({
 }, async event => {
   const { key, value } = event.body
   try {
-    const data: PNGData = await parsePng(value)
-    await event.env.BACKUP.put(key, data.data)
+    const data: ArrayBuffer = await parsePng(value)
+    await event.env.BACKUP.put(key, data)
     await event.env.SNAPSHOTS.delete(key)
     return event.reply.ok()
   } catch (error) {
@@ -21,11 +21,14 @@ useComet<HeartEnvironment, TBody>({
   }
 })
 
-async function parsePng(data: ArrayBuffer): Promise<PNGData> {
-  return new Promise((resolve, reject) => {
-    new PNG().parse(data, (error: Error, data: PNGData) => {
+async function parsePng(data: ArrayBuffer): Promise<ArrayBuffer> {
+  return new Promise(resolve => {
+    /*new PNG().parse(data, (error: Error, data: PNGData) => {
       if (error) reject(error)
       else resolve(data)
-    })
+    })*/
+    const png = new PNG()
+    png.write(data)
+    resolve(png.pack().data)
   })
 }
