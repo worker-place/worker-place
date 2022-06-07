@@ -7,13 +7,17 @@
     </template>
     <template #sidebar-middle>
       <Container center gap="4px" grid="1fr">
-        <Container v-if="currentUser">
-          <Text>{{ currentUser.username }} ({{ currentUser.id }})</Text>
-        </Container>
-        <Container v-if="currentSquad">
-          <Text>{{ currentSquad.name }}</Text>
-          <Text>Member count: {{ currentSquad.memberCount }}</Text>
-        </Container>
+        <Text v-if="currentUser">
+          <Text bold part>
+            {{ currentUser.username }}
+          </Text> ({{ currentUser.id }})
+        </Text>
+        <Text v-if="currentSquad">
+          {{ currentSquad.name }}
+        </Text>
+        <Text v-if="currentSquad">
+          Member count: {{ currentSquad.memberCount }}
+        </Text>
       </Container>
     </template>
     <template #sidebar-bottom>

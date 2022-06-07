@@ -29,11 +29,10 @@
             </Container>
             <Separator />
             <Container class="squad-content">
-              <Container class="squad-image-container" rounded>
+              <Container class="squad-image-container">
                 <Image
                   alt="Squad image"
                   class="squad-image"
-                  rounded
                   :source="`https://worker.place/api/image?id=${squad.id}`"
                 />
               </Container>
@@ -241,6 +240,7 @@
 
   .squad-image-container {
     background: var(--background-2);
+    border-radius: 4px;
     display: grid;
     height: 128px;
     margin-right: 2rem;
