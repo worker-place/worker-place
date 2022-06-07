@@ -26,6 +26,8 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
       }))
 
     return await Promise.all(keys.map(each => env.SNAPSHOTS.delete(each)))
+  } else {
+    console.log('keys.length < 0')
   }
 }
 
