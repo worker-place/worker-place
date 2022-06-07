@@ -4,13 +4,9 @@ async function doBackup(env: BackupEnvironment): Promise<unknown> {
   const pending: Array<Promise<unknown>> = []
   if (keys.length > 0) {
     for (const key of keys) {
-      console.log(key)
       const buffer = await env.SNAPSHOTS.get(key, 'arrayBuffer')
       if (!buffer) continue
-      console.log(buffer?.byteLength)
       const bytes = new Uint8Array(buffer, 0)
-      //console.log( [ ...bytes.values() ].splice(0, 100))
-      console.log('kaki')
       pending.push(env.HEART.fetch('https://worker.place/api/backup', {
         method: 'POST',
         headers: {
