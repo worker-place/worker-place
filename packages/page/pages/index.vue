@@ -51,6 +51,22 @@
           >
             login
           </MenubarLink>
+          <MenubarLink
+            v-else
+            active-background="primary"
+            active-color="white"
+            background="primary"
+            click-background="primary"
+            click-color="white"
+            color="white"
+            href="#"
+            icon="sign-out"
+            icon-color="white"
+            icon-variant="bold"
+            @click="logout"
+          >
+            logout
+          </MenubarLink>
         </template>
         <template #content>
           <NuxtChild />
@@ -80,4 +96,19 @@
       displayLogin.value = false
     }
   })
+
+  async function logout() {
+    const userId = user.value?.id
+    if (!userId) {
+      throw new Error('User ID is not defined')
+    }
+
+    const response = await fetch('/api/user/logout', { method: 'POST', body: JSON.stringify({ userId: userId }) })
+    if (response.status !== 200) {
+      console.log('Failed to logout')
+    } else {
+      displayLogin.value = true
+      user.value = undefined
+    }
+  }
 </script>

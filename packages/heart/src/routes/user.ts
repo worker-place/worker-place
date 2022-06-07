@@ -27,6 +27,24 @@ useComet<HeartEnvironment, { code: string }>({
   return event.reply.ok({ user: result.user, squad: result.squad })
 })
 
+// Logout user
+useComet<HeartEnvironment, { userId: string}>({
+  server: 'main',
+  method: Method.POST,
+  pathname: '/api/user/logout',
+  before: [ authentication ]
+}, async event => {
+  event.reply.cookies.set('worker_place_auth', '0', {
+    httpOnly: true,
+    maxAge: 0,
+    secure: true,
+    sameSite: 'Strict',
+    path: '/api'
+  })
+
+  return event.reply.ok()
+})
+
 // Get current user data
 useComet<HeartEnvironment, unknown>({
   server: 'main',
