@@ -2,12 +2,17 @@
   <Container max>
     <Container v-if="mayCreateSquad()" article padded>
       <Form @submit="createSquad">
-        <Input type="file" @change="onFileChange">
-          File
-        </Input>
-        <Input v-model="name" placeholder="Squad name" type="text" />
-        <Input v-model="top" placeholder="Top offset" type="number" />
-        <Input v-model="left" placeholder="Left offset" type="number" />
+        <Text sectiontitle>
+          Create a new squad
+        </Text>
+        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+        <Input class="squad-create-image" required type="file" @change="onFileChange" />
+        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+        <Input v-model="name" placeholder="Squad name" required type="text" />
+        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+        <Input v-model="top" placeholder="Top offset" required type="number" />
+        <!-- eslint-disable-next-line vue/max-attributes-per-line -->
+        <Input v-model="left" placeholder="Left offset" required type="number" />
         <Button type="submit">
           Create
         </Button>
@@ -28,12 +33,13 @@
                 <Image
                   alt="Squad image"
                   class="squad-image"
+                  rounded
                   :source="`https://worker.place/api/image?id=${squad.id}`"
                 />
               </Container>
               <Container class="squad-info-container">
                 <Text>
-                  Owner: {{ squad.owner }}
+                  ID: {{ squad.id }}
                 </Text>
                 <Text>
                   Member count: {{ squad.memberCount }}
@@ -215,6 +221,10 @@
     gap: 1rem;
     grid-template-columns: 1fr 1fr;
     margin: 2rem 0;
+  }
+
+  .squad-create-image {
+    padding-top: 4px;
   }
 
   .squad-entry {
