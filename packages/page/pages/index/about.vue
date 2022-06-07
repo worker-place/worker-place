@@ -20,7 +20,7 @@
         </Text>.
       </Text>
       <Text>
-        The idea is simple: every 20 seconds, your squad gets to paint one pixel for each member - automatically (may sound somewhat familia <AutoLink href="https://reddit.com/r/place" :weight="500">r/place</AutoLink>)
+        The idea is simple: every 20 seconds, your squad gets to paint <Text class="strikethrough" part>one pixel</Text> four pixels for each member - automatically (may sound somewhat familia <AutoLink href="https://reddit.com/r/place" :weight="500">r/place</AutoLink>)
       </Text>
       <Text subtitle>
         The challenge
@@ -116,3 +116,9 @@
     </Container>
   </Container>
 </template>
+
+<style lang="scss" scoped>
+  .strikethrough {
+    text-decoration: line-through;
+  }
+</style>

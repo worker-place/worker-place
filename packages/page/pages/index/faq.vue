@@ -7,7 +7,7 @@
       </Text>
       <Text>
         After joining a squad, lean back and see how you and your squad can paint your desired image.
-        Every 20 seconds, a <AutoLink href="https://blog.cloudflare.com/durable-objects-alarms/">Durable Object Alarm</AutoLink> is triggered. This handles updating one pixel per member for each squad.
+        Every 20 seconds, a <AutoLink href="https://blog.cloudflare.com/durable-objects-alarms/">Durable Object Alarm</AutoLink> is triggered. This handles updating <Text class="strikethrough" part>one pixel</Text> four pixels per member for each squad.
         <AutoLink href="/about" :weight="500">
           Learn more about the project here
         </AutoLink>
@@ -79,3 +79,9 @@
     </Container>
   </Container>
 </template>
+
+<style lang="scss" scoped>
+  .strikethrough {
+    text-decoration: line-through;
+  }
+</style>
