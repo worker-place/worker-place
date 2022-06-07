@@ -2,9 +2,9 @@ import { PlaceEnvironment, Squad } from './types'
 
 
 function targetToImageIndex(index: number, squad: Squad): number {
-  const { top, left, height, width } = squad.target
+  const { top, left, width } = squad.target
   const x = (left * 3) + index % (width * 3)
-  const y = top + Math.floor(index / height)
+  const y = top + Math.floor(index / (width * 3))
   return y * (1024 * 3) + x
 }
 
