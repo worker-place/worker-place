@@ -11,6 +11,7 @@ export class Place {
   mem: Partial<PlaceEnvironment>
 
   constructor(state: DurableObjectState, env: PlaceEnvironment) {
+    console.log('[Place DO] (constructor)')
     this.state = state
     this.env = env
     this.mem = {
@@ -54,9 +55,10 @@ export class Place {
   async setupAlarm() {
     console.log('[Place DO] (setupAlarm): begin')
     const alarm = await this.state.storage.getAlarm()
-    console.log('[Place DO] (setupAlarm): alarm is', alarm)
-    if (alarm === null) {
-      const date = Date.now() + 1000
+    console.log('[Place DO] (setupAlarm): current alarm is', alarm)
+    if (alarm === null || alarm < Date.now()) {
+      const date = Date.now() + 1000 * 20
+      console.log('[Place DO] (setupAlarm): set alarm to', date)
       await this.state.storage.setAlarm(date)
       await this.state.storage.put('next_alarm_date', date)
     }
@@ -70,7 +72,7 @@ export class Place {
     await this.saveImage()
 
     const alarm = await this.state.storage.get('next_alarm_date') as number ?? Date.now()
-
+    console.log('[Place DO] (alarm): set alarm to', alarm)
     await this.state.storage.setAlarm(alarm + 1000 * 20)
     await this.state.storage.put('next_alarm_date', alarm + 1000 * 20)
 
