@@ -6,6 +6,7 @@
           Create a new squad
         </Text>
         <Input required type="file" @change="onFileChange" />
+        <Text>Images must be at most 128x128 PNG files.</Text>
         <!-- eslint-disable-next-line vue/max-attributes-per-line -->
         <Input v-model="name" placeholder="Squad name" required type="text" />
         <!-- eslint-disable-next-line vue/max-attributes-per-line -->
