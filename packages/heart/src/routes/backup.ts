@@ -1,5 +1,6 @@
 import { Method, useComet } from '@neoaren/comet'
 import jpeg, { RawImageData } from 'jpeg-js'
+import Jimp from 'jimp'
 
 
 type TBody = { key: string; value: number[] }
@@ -28,7 +29,7 @@ useComet<HeartEnvironment, TBody>({
   } catch (error: unknown) {
     console.log('h')
     // @ts-expect-error ...
-    console.log('[backup] PNG conversion failed', error.message)
+    console.log('[backup] JPEG conversion failed', error.message)
     // @ts-expect-error ...
     console.log(error.stack)
     return event.reply.internalServerError('PNG conversion failed')
@@ -36,14 +37,20 @@ useComet<HeartEnvironment, TBody>({
 })
 
 async function parsePng(data: ArrayBuffer): Promise<ArrayBuffer> {
-  return new Promise(resolve => {
-    const rawData: RawImageData<ArrayBuffer> = {
-      data: data,
-      height: 1024,
-      width: 1024
+  const uintBuffer = new Uint8Array(data)
+  const lastbuffer = new Uint8ClampedArray(4 * 1024 * 1024)
+  lastbuffer.fill(255)
+  for (let i = 0; i < 1024 * 1024; i++) {
+    if (uintBuffer[3 * i] === 4 && uintBuffer[3 * i + 1] === 4 && uintBuffer[3 * i + 2] === 4) {
+      lastbuffer[4 * i + 3] = 0
+    } else {
+      lastbuffer[4 * i] = uintBuffer[3 * i]
+      lastbuffer[4 * i + 1] = uintBuffer[3 * i + 1]
+      lastbuffer[4 * i + 2] = uintBuffer[3 * i + 2]
     }
+  }
 
-    const result = jpeg.encode(rawData, 50)
-    resolve(result.data)
-  })
+  const result = await Jimp.read(lastbuffer)
+  console.log(result.bitmap.data)
+  return result.bitmap.data
 }
