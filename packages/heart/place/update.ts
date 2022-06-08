@@ -31,6 +31,9 @@ export default async function(state: DurableObjectState, env: PlaceEnvironment) 
   const squads = await state.storage.list<Squad>({ prefix: 'squad_' })
   for (const squad of squads.values()) {
     const nextPixel = draw(squad, env.IMAGE)
+    if (squad.target.top < 0) {
+      squad.target.top = 0
+    }
     writes.push(state.storage.put<Squad>(`squad_${squad.id}`, { ...squad, nextPixel }))
   }
   await Promise.all(writes)
