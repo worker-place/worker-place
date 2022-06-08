@@ -86,10 +86,6 @@ export class Place {
       }
     })
 
-    if (this.mem.IMAGE) {
-      await this.env.SNAPSHOTS.put(Date.now().toString(), this.mem.IMAGE)
-    }
-
     console.log('[Place DO] (alarm): end')
   }
 

@@ -1,8 +1,6 @@
 import { comet } from '@neoaren/comet'
-
 import './routes/user'
 import './routes/squad'
-// import './routes/backup'
 
 
 export default {

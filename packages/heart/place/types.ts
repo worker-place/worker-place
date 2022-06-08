@@ -1,7 +1,6 @@
 export interface PlaceEnvironment {
   IMAGE: Uint8Array
   SESSIONS: WebSocket[]
-  SNAPSHOTS: KVNamespace
 }
 
 export interface User {

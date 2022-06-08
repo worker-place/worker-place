@@ -7,12 +7,6 @@ updates:
   commit-message:
     prefix: ":paperclip:"
 - package-ecosystem: npm
-  directory: /packages/backup
-  schedule:
-    interval: daily
-  commit-message:
-    prefix: ":paperclip:"
-- package-ecosystem: npm
   directory: /packages/heart
   schedule:
     interval: daily
