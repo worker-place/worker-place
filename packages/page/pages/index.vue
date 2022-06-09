@@ -107,6 +107,10 @@
       currentSquad.value = body.squad
       displayLogin.value = false
     }
+
+    useAlert().show({
+      text: 'Hello'
+    })
   })
 
   async function logout() {

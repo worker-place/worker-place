@@ -39,6 +39,7 @@
   const inputValue = ref<string>()
   const error = ref<string>()
   const errorcolor = useThemeColor('red')
+  const background = useThemeColor('background3')
 
   const displayError = (message?: string) => error.value = message || 'You need to specify a valid value'
 
@@ -75,6 +76,8 @@
 
 <style lang="scss" scoped>
   .confirm-container {
+    background: v-bind(background);
+    border-radius: 5px;
     padding: 2rem;
   }
 

@@ -23,6 +23,7 @@
   const DEF_BUTTON_TEXT = 'Dismiss'
 
   const alert = useAlert().get()
+  const background = useThemeColor('background3')
 
   function closed() {
     const callback = alert.value?.closed
@@ -36,6 +37,8 @@
 
 <style lang="scss" scoped>
   .alert-container {
+    background: v-bind(background);
+    border-radius: 5px;
     padding: 2rem;
   }
 
