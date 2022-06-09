@@ -4,6 +4,7 @@ import { Alert } from '../types'
 const ALERT_KEY = '__ALERT__'
 
 function show(alert: Alert) {
+  useConfirm().destroy()
   get().value = alert
 }
 
