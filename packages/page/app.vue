@@ -15,6 +15,7 @@
   >
     <NuxtPage />
     <AlertContainer />
+    <ConfirmContainer />
   </Paintbrush>
 </template>
 

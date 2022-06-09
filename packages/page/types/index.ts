@@ -19,3 +19,15 @@ export interface Alert {
   closed?: () => void
   text: string
 }
+
+export interface Confirm {
+  buttonColor?: string
+  failure?: () => void
+  success?: () => void
+  task?: {
+    errorMessage?: string
+    instruction?: string
+    validate: (input: string) => boolean
+  }
+  text: string
+}
