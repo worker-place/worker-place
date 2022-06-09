@@ -1,6 +1,6 @@
 <template>
   <Container>
-    <Popup v-if="alert?.display">
+    <Popup v-if="alert">
       <Container class="alert-container">
         <Container center>
           <Text>

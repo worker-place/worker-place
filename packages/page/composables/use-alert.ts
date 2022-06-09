@@ -2,15 +2,9 @@ import { Alert } from '../types'
 
 
 const ALERT_KEY = '__ALERT__'
-type StoredAlert = Alert & { display: boolean }
 
 function show(alert: Alert) {
-  const obj = {
-    ...alert,
-    display: true
-  }
-
-  get().value = obj
+  get().value = alert
 }
 
 function get() {
