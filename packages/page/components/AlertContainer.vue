@@ -1,14 +1,18 @@
 <template>
   <Container>
-    <Popup v-if="alert.display">
-      <Container center class="alert-container">
-        <Text>
-          {{ alert.text }}
-        </Text>
+    <Popup v-if="alert?.display">
+      <Container class="alert-container">
+        <Container center>
+          <Text>
+            {{ alert.text }}
+          </Text>
+        </Container>
         <Separator />
-        <Button :color="alert.buttonColor || DEF_BUTTON_COLOR" @click="closed">
-          {{ alert.buttonText || DEF_BUTTON_TEXT }}
-        </Button>
+        <Container center>
+          <Button :color="alert.buttonColor || DEF_BUTTON_COLOR" @click="closed">
+            {{ alert.buttonText || DEF_BUTTON_TEXT }}
+          </Button>
+        </Container>
       </Container>
     </Popup>
   </Container>
@@ -18,15 +22,24 @@
   const DEF_BUTTON_COLOR = 'red'
   const DEF_BUTTON_TEXT = 'Dismiss'
 
-  const alert = useAlert()
+  const alert = useAlert().get()
 
   function closed() {
     const callback = alert.value?.closed
     if (callback) {
       callback()
     }
+
+    useAlert().destroy()
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  .alert-container {
+    padding: 2rem;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
 </style>

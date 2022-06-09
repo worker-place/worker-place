@@ -115,10 +115,6 @@
       throw new Error('User ID is not defined')
     }
 
-    useAlert({
-      text: 'Hello There',
-      closed: () => console.log('Alert was closed')
-    })
     const response = await fetch('/api/user/logout', { method: 'POST', body: JSON.stringify({ userId: userId }) })
     if (response.status !== 200) {
       console.log('Failed to logout')
