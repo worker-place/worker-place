@@ -12,3 +12,10 @@ export interface Squad {
   nextPixel: number
   owner: string
 }
+
+export interface Alert {
+  buttonColor?: string
+  buttonText?: string
+  closed?: () => void
+  text: string
+}

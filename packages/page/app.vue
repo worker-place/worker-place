@@ -14,6 +14,7 @@
     url="https://worker.place"
   >
     <NuxtPage />
+    <AlertContainer />
   </Paintbrush>
 </template>
 
