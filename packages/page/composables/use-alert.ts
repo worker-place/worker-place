@@ -8,7 +8,7 @@ function show(alert: Alert) {
 }
 
 function get() {
-  return useState<StoredAlert | undefined>(ALERT_KEY)
+  return useState<Alert | undefined>(ALERT_KEY)
 }
 
 function destroy() {
