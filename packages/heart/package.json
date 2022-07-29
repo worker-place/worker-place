@@ -36,7 +36,7 @@
     "@danifoldi/eslint-plugin-eslint-presets": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
-    "esbuild": "^0.14.42",
+    "esbuild": "^0.14.51",
     "eslint": "^8.17.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.5.3",
