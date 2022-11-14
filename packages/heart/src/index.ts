@@ -25,4 +25,4 @@ export default {
   }
 }
 
-export { Place } from '../place/Place'
+// export { Place } from '../place/Place'
